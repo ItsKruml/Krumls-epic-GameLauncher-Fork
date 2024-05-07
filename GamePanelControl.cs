@@ -13,10 +13,11 @@ namespace GameLauncher
 {
     public partial class GamePanelControl : UserControl
     {
-        public LocalGame Game;
+        private LocalGame game;
+        private bool stillLoading = true;
         public GamePanelControl(LocalGame game)
         {
-            this.Game = game;
+            this.game = game;
             InitializeComponent();
         }
 
@@ -29,11 +30,12 @@ namespace GameLauncher
 
             new Thread(() =>
             {
-                Game.LoadOrDownloadResources();
+                game.LoadOrDownloadResources();
+                stillLoading = false;
 
                 Invoke(() =>
                 {
-                    CoverImageBox.Image = Game.Cover;
+                    CoverImageBox.Image = game.Cover;
                 });
             })
             { IsBackground = true }.Start();
@@ -60,12 +62,14 @@ namespace GameLauncher
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            Game.Launch();
+            game.Launch();
         }
 
         private void MoreButton_Click(object sender, EventArgs e)
         {
+            if (stillLoading) return;
 
+            GameDetailsControl.Spawn(ParentForm!, game);
         }
     }
 }

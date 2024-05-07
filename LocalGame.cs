@@ -9,9 +9,13 @@ namespace GameLauncher
     {
         public readonly string GamePath;
 
+        public string[] LaunchNames => LaunchData.Keys.ToArray();
         public Dictionary<string, string> LaunchData;
         public Dictionary<string, string>? GameMetaData;
         public Image? Cover;
+
+        public Process? AttachedProcess;
+        public bool IsRunning => AttachedProcess != null && !AttachedProcess.HasExited;
 
         public string? Name => GameMetaData?["name"];
         public string? Genres => GameMetaData?["genres"];
@@ -72,7 +76,8 @@ namespace GameLauncher
             if (results.Length != 1)
                 throw new RestorableError("No, or multiple results found");
 
-            return Process.Start(results.First());
+            AttachedProcess = Process.Start(results.First());
+            return AttachedProcess;
         }
 
         public bool HasResources()
@@ -88,6 +93,7 @@ namespace GameLauncher
 
         public void DeleteResources()
         {
+            this.Cover = null;
             Directory.Delete(resourcePath, true);
         }
 

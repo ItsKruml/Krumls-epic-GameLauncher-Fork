@@ -23,6 +23,7 @@ namespace GameLauncher
         {
             Match m = Regex.Match(query, @"\[(\d+)\]");
 
+            // This allows overriding search by putting an id in [brackets]
             if (m.Success)
             {
                 return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
