@@ -9,6 +9,7 @@ namespace GameLauncher
     {
         public static string ScanDir = "D:/NonSteamLibrary";
         private static LocalGame[]? Games;
+
         public Form1()
         {
             InitializeComponent();
@@ -21,10 +22,17 @@ namespace GameLauncher
 
         private void LoadGames()
         {
+            flowLayoutPanel1.Controls.Clear();
+
             Games = LocalGame.GetLocalGames(ScanDir);
+
+            LoadingProgressBar.Visible = true;
+            LoadingProgressBar.Value = 0;
+            LoadingProgressBar.Maximum = Games.Length;
+
             foreach (LocalGame game in Games)
             {
-                GamePanelControl gpc = new(game);
+                GamePanelControl gpc = new(this, game);
                 flowLayoutPanel1.Controls.Add(gpc);
             }
         }
@@ -35,9 +43,45 @@ namespace GameLauncher
                 if (game.HasResources())
                     game.DeleteResources();
 
-            flowLayoutPanel1.Controls.Clear();
+            LoadGames();
+        }
+
+        private void addManuallyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openDialog = new();
+            openDialog.Title = "Select your executable";
+            openDialog.Multiselect = false;
+            openDialog.InitialDirectory = ScanDir;
+            DialogResult result = openDialog.ShowDialog();
+
+            if (result != DialogResult.OK)
+                return;
+
+            string executable = Path.GetFileName(openDialog.FileName);
+
+            FolderBrowserDialog folderDialog = new();
+            folderDialog.InitialDirectory = ScanDir;
+            result = folderDialog.ShowDialog();
+
+            if (result != DialogResult.OK)
+                return;
+
+            string folder = folderDialog.SelectedPath;
+
+            string launchFile = Path.Join(folder, "launch.dat");
+            DatFile.Save(launchFile, new Dictionary<string, string> { { "default", executable } });
+
+            MessageBox.Show("Game successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             LoadGames();
+        }
+
+        public void TaskCompleted()
+        {
+            if (!this.LoadingProgressBar.Visible) return;
+
+            this.LoadingProgressBar.Value++;
+            if (this.LoadingProgressBar.Value >= this.LoadingProgressBar.Maximum) this.LoadingProgressBar.Visible = false;
         }
     }
 }

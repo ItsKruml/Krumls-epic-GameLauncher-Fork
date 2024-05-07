@@ -28,83 +28,76 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             flowLayoutPanel1 = new FlowLayoutPanel();
-            menuStrip1 = new MenuStrip();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            gamesToolStripMenuItem = new ToolStripMenuItem();
-            changeScanDirectoryToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStrip1 = new ContextMenuStrip(this.components);
+            addManuallyToolStripMenuItem = new ToolStripMenuItem();
             purgeAllMetadataToolStripMenuItem = new ToolStripMenuItem();
-            menuStrip1.SuspendLayout();
+            LoadingProgressBar = new ProgressBar();
+            contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.ContextMenuStrip = contextMenuStrip1;
             flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(0, 24);
+            flowLayoutPanel1.Location = new Point(0, 0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(899, 431);
+            flowLayoutPanel1.Size = new Size(899, 455);
             flowLayoutPanel1.TabIndex = 0;
             // 
-            // menuStrip1
+            // contextMenuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, gamesToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(899, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { addManuallyToolStripMenuItem, purgeAllMetadataToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(174, 48);
             // 
-            // fileToolStripMenuItem
+            // addManuallyToolStripMenuItem
             // 
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
-            fileToolStripMenuItem.Text = "File";
-            // 
-            // gamesToolStripMenuItem
-            // 
-            gamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { changeScanDirectoryToolStripMenuItem, purgeAllMetadataToolStripMenuItem });
-            gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
-            gamesToolStripMenuItem.Size = new Size(55, 20);
-            gamesToolStripMenuItem.Text = "Games";
-            // 
-            // changeScanDirectoryToolStripMenuItem
-            // 
-            changeScanDirectoryToolStripMenuItem.Name = "changeScanDirectoryToolStripMenuItem";
-            changeScanDirectoryToolStripMenuItem.Size = new Size(192, 22);
-            changeScanDirectoryToolStripMenuItem.Text = "Change scan directory";
+            addManuallyToolStripMenuItem.Name = "addManuallyToolStripMenuItem";
+            addManuallyToolStripMenuItem.Size = new Size(173, 22);
+            addManuallyToolStripMenuItem.Text = "Add manually";
+            addManuallyToolStripMenuItem.Click += this.addManuallyToolStripMenuItem_Click;
             // 
             // purgeAllMetadataToolStripMenuItem
             // 
             purgeAllMetadataToolStripMenuItem.Name = "purgeAllMetadataToolStripMenuItem";
-            purgeAllMetadataToolStripMenuItem.Size = new Size(192, 22);
+            purgeAllMetadataToolStripMenuItem.Size = new Size(173, 22);
             purgeAllMetadataToolStripMenuItem.Text = "Purge all metadata";
             purgeAllMetadataToolStripMenuItem.Click += this.purgeAllMetadataToolStripMenuItem_Click;
+            // 
+            // LoadingProgressBar
+            // 
+            LoadingProgressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            LoadingProgressBar.Location = new Point(198, 212);
+            LoadingProgressBar.Name = "LoadingProgressBar";
+            LoadingProgressBar.Size = new Size(502, 30);
+            LoadingProgressBar.TabIndex = 1;
+            LoadingProgressBar.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(899, 455);
+            this.Controls.Add(LoadingProgressBar);
             this.Controls.Add(flowLayoutPanel1);
-            this.Controls.Add(menuStrip1);
-            this.MainMenuStrip = menuStrip1;
+            this.Icon = (Icon)resources.GetObject("$this.Icon");
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Game Launcher";
             this.Load += this.Form1_Load;
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
         }
 
         #endregion
 
         private FlowLayoutPanel flowLayoutPanel1;
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem gamesToolStripMenuItem;
-        private ToolStripMenuItem changeScanDirectoryToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
         private ToolStripMenuItem purgeAllMetadataToolStripMenuItem;
+        private ToolStripMenuItem addManuallyToolStripMenuItem;
+        private ProgressBar LoadingProgressBar;
     }
 }

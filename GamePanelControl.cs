@@ -13,10 +13,12 @@ namespace GameLauncher
 {
     public partial class GamePanelControl : UserControl
     {
+        private Form1 originForm;
         private LocalGame game;
         private bool stillLoading = true;
-        public GamePanelControl(LocalGame game)
+        public GamePanelControl(Form1 originForm, LocalGame game)
         {
+            this.originForm = originForm;
             this.game = game;
             InitializeComponent();
         }
@@ -33,11 +35,12 @@ namespace GameLauncher
                 game.LoadOrDownloadResources();
                 stillLoading = false;
 
-                UpdateStartButton();
-
                 Invoke(() =>
                 {
+                    UpdateStartButton();
                     CoverImageBox.Image = game.Cover;
+
+                    originForm.TaskCompleted();
                 });
             })
             { IsBackground = true }.Start();
@@ -57,6 +60,8 @@ namespace GameLauncher
 
         public void UpdatePos()
         {
+            if (stillLoading) return;
+
             bool inside = MouseIsOverControl(this);
             PlayButton.Visible = inside;
             MoreButton.Visible = inside;

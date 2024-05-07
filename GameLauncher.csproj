@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>gamelauncher.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="gamelauncher.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="IGDB" Version="3.0.0" />
