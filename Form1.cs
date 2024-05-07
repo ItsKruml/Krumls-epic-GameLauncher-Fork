@@ -7,6 +7,8 @@ namespace GameLauncher
 {
     public partial class Form1 : Form
     {
+        public static string ScanDir = "D:/NonSteamLibrary";
+        private static LocalGame[]? Games;
         public Form1()
         {
             InitializeComponent();
@@ -19,8 +21,8 @@ namespace GameLauncher
 
         private void LoadGames()
         {
-            string[] games = Management.GetGames();
-            foreach (string game in games)
+            Games = LocalGame.GetLocalGames(ScanDir);
+            foreach (LocalGame game in Games)
             {
                 GamePanelControl gpc = new(game);
                 flowLayoutPanel1.Controls.Add(gpc);
@@ -29,10 +31,9 @@ namespace GameLauncher
 
         private void purgeAllMetadataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string[] games = Management.GetGames();
-            foreach (string game in games)
-                if (Management.HasResources(game))
-                    Management.DeleteResources(game);
+            foreach (LocalGame game in Games!)
+                if (game.HasResources())
+                    game.DeleteResources();
 
             flowLayoutPanel1.Controls.Clear();
 
