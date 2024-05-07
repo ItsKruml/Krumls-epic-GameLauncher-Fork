@@ -129,5 +129,14 @@ namespace GameLauncher
             // ??= allows modifications only when initial value is null;
             GameMetaData ??= DatFile.Open(gameMetadataPath);
         }
+
+        public void Kill()
+        {
+            if (!IsRunning)
+                throw new RestorableError("Game not running");
+
+            AttachedProcess.Kill();
+            AttachedProcess = null;
+        }
     }
 }

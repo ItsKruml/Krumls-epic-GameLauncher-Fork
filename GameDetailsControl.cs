@@ -39,6 +39,8 @@ namespace GameLauncher
 
             foreach (ToolStripLabel item in playToolStripMenuItem.DropDownItems)
                 item.Click += this.Item_Click;
+
+            UpdateStartButton();
         }
 
         private void Item_Click(object? sender, EventArgs e)
@@ -50,7 +52,12 @@ namespace GameLauncher
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            game.Launch();
+            if (!game.IsRunning)
+                game.Launch();
+            else 
+                game.Kill();
+
+            UpdateStartButton();
         }
 
         public static GameDetailsControl Spawn(Form parent, LocalGame game)
@@ -80,8 +87,12 @@ namespace GameLauncher
                 game.DeleteResources();
 
             game.LoadOrDownloadResources();
+        }
 
-
+        private void UpdateStartButton()
+        {
+            PlayButton.Text = game.IsRunning ? "Stop" : "Play";
+            PlayButton.ForeColor = game.IsRunning ? Color.Red : Color.Black;
         }
     }
 }

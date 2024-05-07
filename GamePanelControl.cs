@@ -33,12 +33,16 @@ namespace GameLauncher
                 game.LoadOrDownloadResources();
                 stillLoading = false;
 
+                UpdateStartButton();
+
                 Invoke(() =>
                 {
                     CoverImageBox.Image = game.Cover;
                 });
             })
             { IsBackground = true }.Start();
+
+            UpdateStartButton();
         }
 
         private void All_MouseLeave(object sender, EventArgs e)
@@ -62,7 +66,10 @@ namespace GameLauncher
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            game.Launch();
+            if (!game.IsRunning)
+                game.Launch();
+
+            UpdateStartButton();
         }
 
         private void MoreButton_Click(object sender, EventArgs e)
@@ -70,6 +77,14 @@ namespace GameLauncher
             if (stillLoading) return;
 
             GameDetailsControl.Spawn(ParentForm!, game);
+        }
+
+        private void UpdateStartButton()
+        {
+            PlayButton.Text = game.IsRunning ? "Running" : "Play";
+            PlayButton.ForeColor = game.IsRunning ? Color.Green : Color.Black;
+            PlayButton.Enabled = !game.IsRunning;
+            if (stillLoading) PlayButton.Enabled = false;
         }
     }
 }
