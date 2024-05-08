@@ -38,7 +38,7 @@ namespace GameLauncher
                 Invoke(() =>
                 {
                     UpdateStartButton();
-                    CoverImageBox.Image = game.Cover;
+                    CoverImageBox.ImageLocation = game.CoverPath;
 
                     originForm.TaskCompleted();
                 });

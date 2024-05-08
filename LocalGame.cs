@@ -12,7 +12,6 @@ namespace GameLauncher
         public string[] LaunchNames => LaunchData.Keys.ToArray();
         public Dictionary<string, string> LaunchData;
         public Dictionary<string, string>? GameMetaData;
-        public Image? Cover;
 
         public Process? AttachedProcess;
         public bool IsRunning => AttachedProcess != null && !AttachedProcess.HasExited;
@@ -25,6 +24,8 @@ namespace GameLauncher
         private readonly string gameMetadataPath;
         private readonly string coverPath;
         private readonly string launchPath;
+
+        public string? CoverPath => coverPath;
 
         public LocalGame(string filePath)
         {
@@ -93,7 +94,6 @@ namespace GameLauncher
 
         public void DeleteResources()
         {
-            this.Cover = null;
             Directory.Delete(resourcePath, true);
         }
 
@@ -122,8 +122,6 @@ namespace GameLauncher
                 DatFile.Save(gameMetadataPath, GameMetaData);
 
             }
-
-            Cover = Image.FromFile(coverPath);
 
             // We set this above, theres no point reloading it.
             // ??= allows modifications only when initial value is null;

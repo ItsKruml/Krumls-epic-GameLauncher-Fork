@@ -12,6 +12,8 @@ namespace GameLauncher
 {
     internal class IGDBObj
     {
+        private int currentRequests;
+        private const int limit = 3;
         public IGDBClient client;
 
         public IGDBObj(string clientId, string clientSecret)
@@ -21,22 +23,34 @@ namespace GameLauncher
 
         public Game[] Search(string query, int limit = 1)
         {
-            Match m = Regex.Match(query, @"\[(\d+)\]");
-
-            // This allows overriding search by putting an id in [brackets]
-            if (m.Success)
+            while (currentRequests >= limit)
             {
-                return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
-                    $"fields id,name,cover.*,summary,genres.name;" +
-                    $"where id = {m.Groups[1].Value};")
-                    .GetAwaiter().GetResult();
+                Console.WriteLine($"Ratelimit protection hit, waiting ({Thread.CurrentThread.Name})");
+                Thread.Sleep(1000); 
             }
 
-            return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
-                $"search \"{query}\";" +
-                $" fields id,name,cover.*,summary,genres.name;" +
-                $" limit {limit};")
-                .GetAwaiter().GetResult();
+            try
+            {
+                currentRequests++;
+
+                Match m = Regex.Match(query, @"\[(\d+)\]");
+
+                // This allows overriding search by putting an id in [brackets]
+                if (m.Success)
+                {
+                    return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
+                        $"fields id,name,cover.*,summary,genres.name;" +
+                        $"where id = {m.Groups[1].Value};")
+                        .GetAwaiter().GetResult();
+                }
+
+                return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
+                    $"search \"{query}\";" +
+                    $" fields id,name,cover.*,summary,genres.name;" +
+                    $" limit {limit};")
+                    .GetAwaiter().GetResult();
+            }
+            finally { currentRequests--; }
         }
     }
 }

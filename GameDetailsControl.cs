@@ -32,7 +32,7 @@ namespace GameLauncher
         {
             TitleLabel.Text = game.Name;
             DescriptionLabel.Text = game.Summary;
-            ThumnailImageBox.Image = game.Cover;
+            ThumnailImageBox.ImageLocation = game.CoverPath;
 
             foreach (string profile in game.LaunchNames)
                 playToolStripMenuItem.DropDownItems.Add(new ToolStripLabel(profile));
