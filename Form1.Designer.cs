@@ -44,47 +44,51 @@
             flowLayoutPanel1.ContextMenuStrip = contextMenuStrip1;
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(0, 0);
+            flowLayoutPanel1.Margin = new Padding(6, 6, 6, 6);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(899, 455);
+            flowLayoutPanel1.Size = new Size(1670, 971);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // contextMenuStrip1
             // 
+            contextMenuStrip1.ImageScalingSize = new Size(32, 32);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { addManuallyToolStripMenuItem, purgeAllMetadataToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(174, 48);
+            contextMenuStrip1.Size = new Size(289, 80);
             // 
             // addManuallyToolStripMenuItem
             // 
             addManuallyToolStripMenuItem.Name = "addManuallyToolStripMenuItem";
-            addManuallyToolStripMenuItem.Size = new Size(173, 22);
+            addManuallyToolStripMenuItem.Size = new Size(288, 38);
             addManuallyToolStripMenuItem.Text = "Add manually";
             addManuallyToolStripMenuItem.Click += this.addManuallyToolStripMenuItem_Click;
             // 
             // purgeAllMetadataToolStripMenuItem
             // 
             purgeAllMetadataToolStripMenuItem.Name = "purgeAllMetadataToolStripMenuItem";
-            purgeAllMetadataToolStripMenuItem.Size = new Size(173, 22);
+            purgeAllMetadataToolStripMenuItem.Size = new Size(288, 38);
             purgeAllMetadataToolStripMenuItem.Text = "Purge all metadata";
             purgeAllMetadataToolStripMenuItem.Click += this.purgeAllMetadataToolStripMenuItem_Click;
             // 
             // LoadingProgressBar
             // 
             LoadingProgressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            LoadingProgressBar.Location = new Point(198, 212);
+            LoadingProgressBar.Location = new Point(368, 452);
+            LoadingProgressBar.Margin = new Padding(6, 6, 6, 6);
             LoadingProgressBar.Name = "LoadingProgressBar";
-            LoadingProgressBar.Size = new Size(502, 30);
+            LoadingProgressBar.Size = new Size(932, 64);
             LoadingProgressBar.TabIndex = 1;
             LoadingProgressBar.Visible = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleDimensions = new SizeF(13F, 32F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(899, 455);
+            this.ClientSize = new Size(1670, 971);
             this.Controls.Add(LoadingProgressBar);
             this.Controls.Add(flowLayoutPanel1);
             this.Icon = (Icon)resources.GetObject("$this.Icon");
+            this.Margin = new Padding(6, 6, 6, 6);
             this.Name = "Form1";
             this.Text = "Game Launcher";
             this.Load += this.Form1_Load;
