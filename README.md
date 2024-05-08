@@ -3,6 +3,10 @@
 
 
 
+<img src="gamelauncher.png" style="zoom:50%;" />
+
+
+
 
 ## To-do
 - [ ] Improve game automatic detection for launch.dat
