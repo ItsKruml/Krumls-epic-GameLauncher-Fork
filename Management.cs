@@ -14,5 +14,6 @@ namespace GameLauncher
     internal static class Management
     {
         public static IGDBObj IGDBObj = new("0h7tabwhz9sediiyafjefsyk2nz115", "6gq5e87pm2cs79mnejml1vizattrt9");
+        public static RichPresence RichPresence = new("1237693349612224562");
     }
 }

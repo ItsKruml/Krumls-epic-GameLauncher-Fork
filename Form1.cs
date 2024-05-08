@@ -11,29 +11,51 @@ namespace GameLauncher
         private static LocalGame[]? Games;
 
         private static Thread? ProcessMonitorThread;
+        private static Thread? RichPresenceThread;
 
         public Form1()
         {
             InitializeComponent();
+        }
 
-            ProcessMonitorThread = new Thread(() =>
+        private static void ProcessMonitorLoop()
+        {
+            while (true)
             {
-                while (true)
-                {
-                    Thread.Sleep(1000);
-                    Process[] processes = Process.GetProcesses();
+                Thread.Sleep(1000);
+                Process[] processes = Process.GetProcesses();
 
-                    foreach (LocalGame game in Games)
-                        game.ScanForExistingProcess(processes);
-                }
-            });
+                foreach (LocalGame game in Games)
+                    game.ScanForExistingProcess(processes);
+            }
+        }
 
-            ProcessMonitorThread.Start();
+        private static void RichPresenceLoop()
+        {
+            Management.RichPresence.Start();
+
+            while (true)
+            {
+                Thread.Sleep(1000);
+
+                // get active game
+                LocalGame? game = Games.FirstOrDefault(x => x.IsRunning);
+                if (game != null)
+                    Management.RichPresence.Update(game);
+                else
+                    Management.RichPresence.Reset();
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             LoadGames();
+
+            ProcessMonitorThread = new(ProcessMonitorLoop);
+            ProcessMonitorThread.Start();
+
+            RichPresenceThread = new(RichPresenceLoop);
+            RichPresenceThread.Start();
         }
 
         private void LoadGames()

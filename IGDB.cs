@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,49 @@ namespace GameLauncher
                     .GetAwaiter().GetResult();
             }
             finally { currentRequests--; }
+        }
+
+        public string ImageUrl(Cover cover, ImageSize size)
+        {
+            return "https:" + cover.Url
+                    .Replace("t_thumb", $"t_{size.GetString()}");
+        }
+    }
+
+    public enum ImageSize
+    {
+        CoverSmall,
+        ScreenshotMed,
+        CoverBig,
+        LogoMed,
+        ScreenshotBig,
+        ScreenshotHuge,
+        Thumb,
+        Micro,
+        z720p,
+        z1080p
+    }
+
+
+    public static class ImageSizeMethods
+    {
+
+        public static string GetString(this ImageSize size)
+        {
+            return size switch
+            {
+                ImageSize.CoverSmall => "cover_small",
+                ImageSize.ScreenshotMed => "screenshot_med",
+                ImageSize.CoverBig => "cover_big",
+                ImageSize.LogoMed => "logo_med",
+                ImageSize.ScreenshotBig => "screenshot_big",
+                ImageSize.ScreenshotHuge => "screenshot_huge",
+                ImageSize.Thumb => "thumb",
+                ImageSize.Micro => "micro",
+                ImageSize.z720p => "720p",
+                ImageSize.z1080p => "1080p",
+                _ => throw new InvalidEnumArgumentException(),
+            };
         }
     }
 }

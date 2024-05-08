@@ -19,6 +19,7 @@ namespace GameLauncher
         public string? Name => GameMetaData?["name"];
         public string? Genres => GameMetaData?["genres"];
         public string? Summary => GameMetaData?["summary"];
+        public string? CoverUrl => GameMetaData?["cover_url"];
 
         private readonly string resourcePath;
         private readonly string gameMetadataPath;
@@ -108,14 +109,14 @@ namespace GameLauncher
 
                 Directory.CreateDirectory(resourcePath);
 
-                byte[] coverData = client.DownloadData("https:" + game.Cover.Value.Url
-                    .Replace("t_thumb", "t_cover_big"));
+                byte[] coverData = client.DownloadData(Management.IGDBObj.ImageUrl(game.Cover.Value, ImageSize.CoverBig));
 
                 GameMetaData = new()
                 {
                     { "name", game.Name },
                     { "genres", string.Join(", ", game.Genres.Values.Select(x => x.Name)) },
-                    { "summary", game.Summary }
+                    { "summary", game.Summary },
+                    { "cover_url", Management.IGDBObj.ImageUrl(game.Cover.Value, ImageSize.Thumb) }
                 };
 
                 File.WriteAllBytes(coverPath, coverData);
