@@ -35,6 +35,7 @@
             addManuallyToolStripMenuItem = new ToolStripMenuItem();
             purgeAllMetadataToolStripMenuItem = new ToolStripMenuItem();
             LoadingProgressBar = new ProgressBar();
+            this.TickTimer = new System.Windows.Forms.Timer(this.components);
             contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,9 +45,9 @@
             flowLayoutPanel1.ContextMenuStrip = contextMenuStrip1;
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(0, 0);
-            flowLayoutPanel1.Margin = new Padding(6, 6, 6, 6);
+            flowLayoutPanel1.Margin = new Padding(6);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1670, 971);
+            flowLayoutPanel1.Size = new Size(1588, 726);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // contextMenuStrip1
@@ -72,23 +73,29 @@
             // 
             // LoadingProgressBar
             // 
-            LoadingProgressBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            LoadingProgressBar.Location = new Point(368, 452);
-            LoadingProgressBar.Margin = new Padding(6, 6, 6, 6);
+            LoadingProgressBar.Anchor = AnchorStyles.None;
+            LoadingProgressBar.Location = new Point(327, 330);
+            LoadingProgressBar.Margin = new Padding(6);
             LoadingProgressBar.Name = "LoadingProgressBar";
             LoadingProgressBar.Size = new Size(932, 64);
             LoadingProgressBar.TabIndex = 1;
             LoadingProgressBar.Visible = false;
             // 
+            // TickTimer
+            // 
+            this.TickTimer.Enabled = true;
+            this.TickTimer.Interval = 1000;
+            this.TickTimer.Tick += this.TickTimer_Tick;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new SizeF(13F, 32F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(1670, 971);
+            this.ClientSize = new Size(1588, 726);
             this.Controls.Add(LoadingProgressBar);
             this.Controls.Add(flowLayoutPanel1);
             this.Icon = (Icon)resources.GetObject("$this.Icon");
-            this.Margin = new Padding(6, 6, 6, 6);
+            this.Margin = new Padding(6);
             this.Name = "Form1";
             this.Text = "Game Launcher";
             this.Load += this.Form1_Load;
@@ -103,5 +110,6 @@
         private ToolStripMenuItem purgeAllMetadataToolStripMenuItem;
         private ToolStripMenuItem addManuallyToolStripMenuItem;
         private ProgressBar LoadingProgressBar;
+        private System.Windows.Forms.Timer TickTimer;
     }
 }

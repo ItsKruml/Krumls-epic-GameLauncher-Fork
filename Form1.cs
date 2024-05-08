@@ -10,9 +10,25 @@ namespace GameLauncher
         public static string ScanDir = "D:/NonSteamLibrary";
         private static LocalGame[]? Games;
 
+        private static Thread? ProcessMonitorThread;
+
         public Form1()
         {
             InitializeComponent();
+
+            ProcessMonitorThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(1000);
+                    Process[] processes = Process.GetProcesses();
+
+                    foreach (LocalGame game in Games)
+                        game.ScanForExistingProcess(processes);
+                }
+            });
+
+            ProcessMonitorThread.Start();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -82,6 +98,21 @@ namespace GameLauncher
 
             this.LoadingProgressBar.Value++;
             if (this.LoadingProgressBar.Value >= this.LoadingProgressBar.Maximum) this.LoadingProgressBar.Visible = false;
+        }
+
+        private void TickTimer_Tick(object sender, EventArgs e)
+        {
+            foreach (ITick item in GetAllTickables(this))
+                item.Tick();
+        }
+
+        private IEnumerable<Control> GetAllTickables(Control parent)
+        {
+            var controls = parent.Controls.Cast<Control>();
+
+            return controls.SelectMany(GetAllTickables)
+                                      .Concat(controls)
+                                      .Where(x => x is ITick);
         }
     }
 }

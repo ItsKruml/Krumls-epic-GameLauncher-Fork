@@ -13,7 +13,7 @@ namespace GameLauncher
     internal class IGDBObj
     {
         private int currentRequests;
-        private const int limit = 3;
+        private const int limit = 4;
         public IGDBClient client;
 
         public IGDBObj(string clientId, string clientSecret)
@@ -25,7 +25,7 @@ namespace GameLauncher
         {
             while (currentRequests >= limit)
             {
-                Console.WriteLine($"Ratelimit protection hit, waiting ({Thread.CurrentThread.Name})");
+                Debug.WriteLine($"Ratelimit protection hit, waiting ({Thread.CurrentThread.ManagedThreadId})");
                 Thread.Sleep(1000); 
             }
 

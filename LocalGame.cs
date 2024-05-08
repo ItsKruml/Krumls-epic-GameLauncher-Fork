@@ -136,5 +136,25 @@ namespace GameLauncher
             AttachedProcess.Kill();
             AttachedProcess = null;
         }
+
+        public void ScanForExistingProcess(Process[] processes)
+        {
+            // Look for processes with the same name
+            Process? process = LaunchData.Values
+                .SelectMany(x => processes.Where(z=> z.ProcessName + ".exe" == x))
+                .Where(x => x.GetMainModuleFilepath()?.IsSubPathOf(GamePath) ?? false).FirstOrDefault();
+
+            if (process != null)
+            {
+                AttachedProcess = process;
+                return;
+            }
+
+            // Look for ones in the same dir (can't, its too expensive)
+            //process = processes
+            //    .Where(x => x.GetMainModuleFilepath()?.IsSubPathOf(GamePath) ?? false).FirstOrDefault();
+
+            //if (process != null) AttachedProcess = process;
+        }
     }
 }

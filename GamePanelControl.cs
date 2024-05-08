@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IGDB.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GameLauncher
 {
-    public partial class GamePanelControl : UserControl
+    public partial class GamePanelControl : UserControl, ITick
     {
         private Form1 originForm;
         private LocalGame game;
@@ -91,5 +95,6 @@ namespace GameLauncher
             PlayButton.Enabled = !game.IsRunning;
             if (stillLoading) PlayButton.Enabled = false;
         }
+        public void Tick() => UpdateStartButton();
     }
 }

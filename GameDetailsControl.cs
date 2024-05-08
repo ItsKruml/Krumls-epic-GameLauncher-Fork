@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace GameLauncher
 {
-    public partial class GameDetailsControl : UserControl
+    public partial class GameDetailsControl : UserControl, ITick
     {
         private LocalGame game;
         public GameDetailsControl(LocalGame game)
@@ -94,5 +94,7 @@ namespace GameLauncher
             PlayButton.Text = game.IsRunning ? "Stop" : "Play";
             PlayButton.ForeColor = game.IsRunning ? Color.Red : Color.Black;
         }
+
+        public void Tick() => UpdateStartButton();
     }
 }
