@@ -15,6 +15,7 @@
 - [ ] Save file management and quick swapping
 - [ ] Add auto-updating
 - [ ] Possibly add game source providing
+- [ ] Fix dir names feature
 
 
 

@@ -113,20 +113,17 @@ namespace GameLauncher
         private void overrideMetadataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IGDBSearchResultsForm form = new(Path.GetFileName(this.game.GamePath));
-            form.Show();
-            
-            form.FormClosed += (sender, args) =>
+            DialogResult result = form.ShowDialog();
+
+            if (result == DialogResult.OK && form.SelectedGame != null)
             {
-                if (form.SelectedGame != null)
-                {
-                    string newPath = $"{this.game.GamePath.TrimEnd('\\', '/')} [{form.SelectedGame.Id}]";
-                    Directory.Move(this.game.GamePath, newPath);
-                    this.game.GamePath = newPath;
+                string newPath = $"{this.game.GamePath.TrimEnd('\\', '/')} [{form.SelectedGame.Id}]";
+                Directory.Move(this.game.GamePath, newPath);
+                this.game.GamePath = newPath;
                     
-                    this.RefreshMetadata();
-                    this.UpdateUIFromMetadata();
-                }
-            };
+                this.RefreshMetadata();
+                this.UpdateUIFromMetadata();
+            }
         }
     }
 }

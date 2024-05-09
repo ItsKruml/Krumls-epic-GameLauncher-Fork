@@ -44,7 +44,9 @@ namespace GameLauncher
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            throw (Exception)e.ExceptionObject;
+            Exception error = (Exception)e.ExceptionObject;
+            
+            MessageBox.Show(error.Message, "A critical error occurred", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private static void UIThreadException(object sender, ThreadExceptionEventArgs e)

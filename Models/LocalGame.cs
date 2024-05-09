@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.RegularExpressions;
 using GameLauncher.Connections;
+using GameLauncher.UI.Forms;
 using GameLauncher.Utils;
 using IGDB.Models;
 
@@ -119,8 +120,27 @@ namespace GameLauncher
         {
             if (!this.HasResources())
             {
-                Game? game = Management.IGDBObj.Search(Path.GetFileNameWithoutExtension(this.GamePath))
-                        .FirstOrDefault() ?? throw new Exception("Could not find game in IGDB");
+                Game? game = Management.IGDBObj.Search(Path.GetFileName(this.GamePath))
+                        .FirstOrDefault();
+
+                if (game == null)
+                {
+                    MessageBox.Show("Game not found on IGDB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    IGDBSearchResultsForm form = new(Path.GetFileName(this.GamePath));
+                    DialogResult result = form.ShowDialog();
+
+                    if (result == DialogResult.OK && form.SelectedGame != null)
+                    {
+                        string newPath = $"{this.GamePath.TrimEnd('\\', '/')} [{form.SelectedGame.Id}]";
+                        Directory.Move(this.GamePath, newPath);
+                        this.GamePath = newPath;
+                        
+                        game = Management.IGDBObj.Search(Path.GetFileName(this.GamePath))
+                            .FirstOrDefault();
+                    }
+                    else
+                        return;
+                }
 
                 WebClient client = new();
 
