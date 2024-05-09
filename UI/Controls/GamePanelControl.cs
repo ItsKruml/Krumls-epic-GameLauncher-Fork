@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GameLauncher.Utils;
 using IGDB.Models;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -24,77 +25,74 @@ namespace GameLauncher
         {
             this.originForm = originForm;
             this.game = game;
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void GamePanelControl_Load(object sender, EventArgs e)
         {
             // Fixes transparency issues
-            NameLabel.Parent = CoverImageBox;
-            MoreButton.Parent = CoverImageBox;
-            PlayButton.Parent = CoverImageBox;
+            this.NameLabel.Parent = this.CoverImageBox;
+            this.MoreButton.Parent = this.CoverImageBox;
+            this.PlayButton.Parent = this.CoverImageBox;
 
-            new Thread(() =>
+            this.game.LoadOrDownloadResourcesAsync(() =>
             {
-                game.LoadOrDownloadResources();
-                stillLoading = false;
+                this.stillLoading = false;
 
-                Invoke(() =>
+                this.Invoke(() =>
                 {
-                    UpdateStartButton();
-                    CoverImageBox.ImageLocation = game.CoverPath;
+                    this.UpdateStartButton();
+                    this.CoverImageBox.ImageLocation = this.game.CoverPath;
 
-                    originForm.TaskCompleted();
+                    this.originForm.TaskCompleted();
                 });
-            })
-            { IsBackground = true }.Start();
+            });
 
-            UpdateStartButton();
+            this.UpdateStartButton();
         }
 
         private void All_MouseLeave(object sender, EventArgs e)
         {
-            UpdatePos();
+            this.UpdatePos();
         }
 
         private void All_MouseEnter(object sender, EventArgs e)
         {
-            UpdatePos();
+            this.UpdatePos();
         }
 
         public void UpdatePos()
         {
-            if (stillLoading) return;
+            if (this.stillLoading) return;
 
-            bool inside = MouseIsOverControl(this);
-            PlayButton.Visible = inside;
-            MoreButton.Visible = inside;
+            bool inside = this.MouseIsOverControl(this);
+            this.PlayButton.Visible = inside;
+            this.MoreButton.Visible = inside;
         }
 
         private bool MouseIsOverControl(Control ctrl) => ctrl.ClientRectangle.Contains(ctrl.PointToClient(Cursor.Position));
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            if (!game.IsRunning)
-                game.Launch();
+            if (!this.game.IsRunning) this.game.Launch();
 
-            UpdateStartButton();
+            this.UpdateStartButton();
         }
 
         private void MoreButton_Click(object sender, EventArgs e)
         {
-            if (stillLoading) return;
+            if (this.stillLoading) return;
 
-            GameDetailsControl.Spawn(ParentForm!, game);
+            new GameDetailsControl(this.game).Spawn(this.ParentForm!);
         }
 
         private void UpdateStartButton()
         {
-            PlayButton.Text = game.IsRunning ? "Running" : "Play";
-            PlayButton.ForeColor = game.IsRunning ? Color.Green : Color.Black;
-            PlayButton.Enabled = !game.IsRunning;
-            if (stillLoading) PlayButton.Enabled = false;
+            this.PlayButton.Text = this.game.IsRunning ? "Running" : "Play";
+            this.PlayButton.ForeColor = this.game.IsRunning ? Color.Green : Color.Black;
+            this.PlayButton.Enabled = !this.game.IsRunning;
+            if (this.stillLoading) this.PlayButton.Enabled = false;
         }
-        public void Tick() => UpdateStartButton();
+        public void Tick() => this.UpdateStartButton();
     }
 }

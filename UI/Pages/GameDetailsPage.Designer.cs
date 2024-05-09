@@ -118,20 +118,20 @@
             // uninstallToolStripMenuItem
             // 
             uninstallToolStripMenuItem.Name = "uninstallToolStripMenuItem";
-            uninstallToolStripMenuItem.Size = new Size(180, 22);
+            uninstallToolStripMenuItem.Size = new Size(166, 22);
             uninstallToolStripMenuItem.Text = "Uninstall";
             // 
             // refreshMetadataToolStripMenuItem
             // 
             refreshMetadataToolStripMenuItem.Name = "refreshMetadataToolStripMenuItem";
-            refreshMetadataToolStripMenuItem.Size = new Size(180, 22);
+            refreshMetadataToolStripMenuItem.Size = new Size(166, 22);
             refreshMetadataToolStripMenuItem.Text = "Refresh metadata";
             refreshMetadataToolStripMenuItem.Click += this.refreshMetadataToolStripMenuItem_Click;
             // 
             // openInExplorerToolStripMenuItem
             // 
             openInExplorerToolStripMenuItem.Name = "openInExplorerToolStripMenuItem";
-            openInExplorerToolStripMenuItem.Size = new Size(180, 22);
+            openInExplorerToolStripMenuItem.Size = new Size(166, 22);
             openInExplorerToolStripMenuItem.Text = "Open in explorer";
             openInExplorerToolStripMenuItem.Click += this.openInExplorerToolStripMenuItem_Click;
             // 

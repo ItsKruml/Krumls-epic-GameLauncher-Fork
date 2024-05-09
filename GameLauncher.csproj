@@ -10,12 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="gamelauncher.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="IGDB" Version="3.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 
@@ -24,6 +21,12 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Forms\IGDBDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="UI\Forms\Form1.cs">
+      <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
 

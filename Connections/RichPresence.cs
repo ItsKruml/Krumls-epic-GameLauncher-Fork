@@ -11,26 +11,36 @@ namespace GameLauncher
     {
         private DiscordRpcClient client;
         private LocalGame? lastGame;
+        private string _clientId;
 
         public RichPresence(string clientId)
         {
-            client = new(clientId);
+            this._clientId = clientId;
+            this.client = new(clientId);
         }
 
         public void Start()
         {
-            client.Initialize();
+            if (this.client.IsDisposed)
+                this.client = new(this._clientId);
+            this.client.Initialize();
+        }
+        
+        public void Stop()
+        {
+            this.lastGame = null;
+            this.client.Dispose();
         }
 
         public void Update(LocalGame game)
         {
-            if (lastGame == game) return;
-            lastGame = game;
+            if (this.lastGame == game) return;
+            this.lastGame = game;
 
-            client.SetPresence(new()
+            this.client.SetPresence(new()
             {
                 Details = $"Playing {game.Name}",
-                Timestamps = new Timestamps(game.AttachedProcess!.StartTime.ToUniversalTime()),
+                Timestamps = new(game.AttachedProcess!.StartTime.ToUniversalTime()),
                 Assets = new()
                 {
                     LargeImageKey = game.CoverUrl
@@ -38,12 +48,10 @@ namespace GameLauncher
             });
         }
 
-        private static DateTime FromUnixTime(long unixTime)
+        public void Reset()
         {
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return epoch.AddMilliseconds(unixTime);
+            this.lastGame = null;
+            this.client.SetPresence(null);
         }
-
-        public void Reset() => client.SetPresence(null);
     }
 }

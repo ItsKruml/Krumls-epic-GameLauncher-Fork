@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
+using GameLauncher.Utils;
 using IGDB.Models;
 
 namespace GameLauncher
@@ -15,12 +16,12 @@ namespace GameLauncher
 
         public Form1()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private static void ProcessMonitorLoop()
         {
-            while (true)
+            while (Management.Running)
             {
                 Thread.Sleep(1000);
                 Process[] processes = Process.GetProcesses();
@@ -32,11 +33,14 @@ namespace GameLauncher
 
         private static void RichPresenceLoop()
         {
-            Management.RichPresence.Start();
+            if (Management.Config.DiscordRPCEnabled)
+                Management.RichPresence.Start();
 
-            while (true)
+            while (Management.Running)
             {
                 Thread.Sleep(1000);
+
+                if (!Management.Config.DiscordRPCEnabled) continue;
 
                 // get active game
                 LocalGame? game = Games.FirstOrDefault(x => x.IsRunning);
@@ -49,42 +53,60 @@ namespace GameLauncher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadGames();
+            this.LoadGames();
 
             ProcessMonitorThread = new(ProcessMonitorLoop);
             ProcessMonitorThread.Start();
 
             RichPresenceThread = new(RichPresenceLoop);
             RichPresenceThread.Start();
+
+            Management.ThemeChange += this.Management_ThemeChange;
+        }
+
+        private void Management_ThemeChange(LauncherTheme theme)
+        {
+            this.BackColor = theme.GetColor(LauncherThemeKey.PrimaryBackground);
+            this.ForeColor = theme.GetColor(LauncherThemeKey.PrimaryText);
         }
 
         private void LoadGames()
         {
-            flowLayoutPanel1.Controls.Clear();
+            this.flowLayoutPanel1.Controls.Clear();
 
             Games = LocalGame.GetLocalGames(ScanDir);
 
-            LoadingProgressBar.Visible = true;
-            LoadingProgressBar.Value = 0;
-            LoadingProgressBar.Maximum = Games.Length;
+            this.LoadingProgressBar.Visible = true;
+            this.LoadingProgressBar.Value = 0;
+            this.LoadingProgressBar.Maximum = Games.Length;
 
             foreach (LocalGame game in Games)
             {
                 GamePanelControl gpc = new(this, game);
-                flowLayoutPanel1.Controls.Add(gpc);
+                this.flowLayoutPanel1.Controls.Add(gpc);
             }
         }
 
         private void purgeAllMetadataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.PurgeAllMetadata();
+        }
+
+        private void addManuallyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.AddGameManually();
+        }
+
+        public void PurgeAllMetadata()
+        {
             foreach (LocalGame game in Games!)
                 if (game.HasResources())
                     game.DeleteResources();
 
-            LoadGames();
+            this.LoadGames();
         }
 
-        private void addManuallyToolStripMenuItem_Click(object sender, EventArgs e)
+        public void AddGameManually()
         {
             OpenFileDialog openDialog = new();
             openDialog.Title = "Select your executable";
@@ -109,9 +131,9 @@ namespace GameLauncher
             string launchFile = Path.Join(folder, "launch.dat");
             DatFile.Save(launchFile, new Dictionary<string, string> { { "default", executable } });
 
-            MessageBox.Show("Game successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Game successfully added", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            LoadGames();
+            this.LoadGames();
         }
 
         public void TaskCompleted()
@@ -124,7 +146,7 @@ namespace GameLauncher
 
         private void TickTimer_Tick(object sender, EventArgs e)
         {
-            foreach (ITick item in GetAllTickables(this))
+            foreach (ITick item in this.GetAllTickables(this))
                 item.Tick();
         }
 
@@ -132,9 +154,24 @@ namespace GameLauncher
         {
             var controls = parent.Controls.Cast<Control>();
 
-            return controls.SelectMany(GetAllTickables)
+            return controls.SelectMany(this.GetAllTickables)
                                       .Concat(controls)
                                       .Where(x => x is ITick);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Management.Running = false;
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            new SettingsPage().Spawn(this);
+        }
+
+        public void CheckForUpdates()
+        {
+            throw new NotImplementedException();
         }
     }
 }

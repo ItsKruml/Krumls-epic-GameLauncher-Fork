@@ -10,8 +10,48 @@ namespace GameLauncher
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            if (!System.Diagnostics.Debugger.IsAttached) 
+            {
+                Application.ThreadException += new
+                    ThreadExceptionEventHandler(UIThreadException);
+
+                // Set the unhandled exception mode to force all Windows Forms errors
+                // to go through our handler.
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+                // Add the event handler for handling non-UI thread exceptions to the event. 
+                AppDomain.CurrentDomain.UnhandledException += new
+                    UnhandledExceptionEventHandler(UnhandledException);
+            }
+
             ApplicationConfiguration.Initialize();
+            
+            Management.Config = Config.Load();
+            
+            //new("0h7tabwhz9sediiyafjefsyk2nz115", "6gq5e87pm2cs79mnejml1vizattrt9")
+            
+            if (!Management.IGDBViable)
+                Application.Run(new IGDBDetailsForm());
+            
+            Management.IGDBObj = new(Management.Config.IGDBId!, Management.Config.IGDBSecret!);
+            Management.RichPresence = new("1237693349612224562");
+            
             Application.Run(new Form1());
+        }
+
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            throw (Exception)e.ExceptionObject;
+        }
+
+        private static void UIThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            if (e.Exception is RestorableError)
+                MessageBox.Show(e.Exception.Message, "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (e.Exception is NotImplementedException)
+                MessageBox.Show("This feature is not yet implemented", "An error occurred", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+                throw e.Exception;
         }
     }
 }

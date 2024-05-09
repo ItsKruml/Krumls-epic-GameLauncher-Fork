@@ -7,13 +7,21 @@ using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using GameLauncher.Connections;
 using IGDB.Models;
 
 namespace GameLauncher
 {
     internal static class Management
     {
-        public static IGDBObj IGDBObj = new("0h7tabwhz9sediiyafjefsyk2nz115", "6gq5e87pm2cs79mnejml1vizattrt9");
-        public static RichPresence RichPresence = new("1237693349612224562");
+        public static IGDBObj IGDBObj;
+        public static RichPresence RichPresence;
+
+        public static bool Running = true;
+        public static Config Config;
+        public static bool IGDBViable => !string.IsNullOrEmpty(Config.IGDBId) && !string.IsNullOrEmpty(Config.IGDBSecret);
+        public static event Action<LauncherTheme> ThemeChange;
+
+        internal static void ThemeChanged() => ThemeChange.Invoke(Config.Theme);
     }
 }

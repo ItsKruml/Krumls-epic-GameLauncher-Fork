@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
+using GameLauncher.Connections;
+using GameLauncher.Utils;
 using IGDB.Models;
 
 namespace GameLauncher
@@ -9,34 +11,34 @@ namespace GameLauncher
     {
         public readonly string GamePath;
 
-        public string[] LaunchNames => LaunchData.Keys.ToArray();
+        public string[] LaunchNames => this.LaunchData.Keys.ToArray();
         public Dictionary<string, string> LaunchData;
         public Dictionary<string, string>? GameMetaData;
 
         public Process? AttachedProcess;
-        public bool IsRunning => AttachedProcess != null && !AttachedProcess.HasExited;
+        public bool IsRunning => this.AttachedProcess != null && !this.AttachedProcess.HasExited;
 
-        public string? Name => GameMetaData?["name"];
-        public string? Genres => GameMetaData?["genres"];
-        public string? Summary => GameMetaData?["summary"];
-        public string? CoverUrl => GameMetaData?["cover_url"];
+        public string? Name => this.GameMetaData?["name"];
+        public string? Genres => this.GameMetaData?["genres"];
+        public string? Summary => this.GameMetaData?["summary"];
+        public string? CoverUrl => this.GameMetaData?["cover_url"];
 
         private readonly string resourcePath;
         private readonly string gameMetadataPath;
         private readonly string coverPath;
         private readonly string launchPath;
 
-        public string? CoverPath => coverPath;
+        public string? CoverPath => this.coverPath;
 
         public LocalGame(string filePath)
         {
-            GamePath = filePath;
-            launchPath = Path.Join(GamePath, "launch.dat");
-            resourcePath = Path.Join(GamePath, "gl.resources");
-            gameMetadataPath = Path.Combine(resourcePath, "metadata.dat");
-            coverPath = Path.Combine(resourcePath, "cover.png");
+            this.GamePath = filePath;
+            this.launchPath = Path.Join(this.GamePath, "launch.dat");
+            this.resourcePath = Path.Join(this.GamePath, "gl.resources");
+            this.gameMetadataPath = Path.Combine(this.resourcePath, "metadata.dat");
+            this.coverPath = Path.Combine(this.resourcePath, "cover.png");
 
-            LaunchData = DatFile.Open(launchPath);
+            this.LaunchData = DatFile.Open(this.launchPath);
         }
 
         public static LocalGame[] GetLocalGames(string scanDir)
@@ -66,28 +68,28 @@ namespace GameLauncher
 
         public Process Launch(string mode = "default")
         {
-            if (!LaunchData.ContainsKey(mode))
+            if (!this.LaunchData.ContainsKey(mode))
                 throw new RestorableError("Specified launch mode not found");
 
-            string fileName = LaunchData[mode];
+            string fileName = this.LaunchData[mode];
 
             string fileExt = Path.GetExtension(fileName.Trim());
-            string[] results = Directory.GetFiles(GamePath, "*" + fileExt, SearchOption.AllDirectories)
+            string[] results = Directory.GetFiles(this.GamePath, "*" + fileExt, SearchOption.AllDirectories)
                 .Where(x => Path.GetFileName(x) == fileName.Trim()).ToArray();
 
             if (results.Length != 1)
                 throw new RestorableError("No, or multiple results found");
 
-            AttachedProcess = Process.Start(results.First());
-            return AttachedProcess;
+            this.AttachedProcess = Process.Start(results.First());
+            return this.AttachedProcess;
         }
 
         public bool HasResources()
         {
-            bool exists = Directory.Exists(resourcePath);
-            if (exists && Directory.GetFiles(resourcePath).Length != 2)
+            bool exists = Directory.Exists(this.resourcePath);
+            if (exists && Directory.GetFiles(this.resourcePath).Length != 2)
             {
-                DeleteResources();
+                this.DeleteResources();
                 return false;
             }
             return exists;
@@ -95,23 +97,23 @@ namespace GameLauncher
 
         public void DeleteResources()
         {
-            Directory.Delete(resourcePath, true);
+            Directory.Delete(this.resourcePath, true);
         }
 
         public void LoadOrDownloadResources()
         {
-            if (!HasResources())
+            if (!this.HasResources())
             {
-                Game? game = Management.IGDBObj.Search(Path.GetFileNameWithoutExtension(GamePath))
+                Game? game = Management.IGDBObj.Search(Path.GetFileNameWithoutExtension(this.GamePath))
                         .FirstOrDefault() ?? throw new Exception("Could not find game in IGDB");
 
                 WebClient client = new();
 
-                Directory.CreateDirectory(resourcePath);
+                Directory.CreateDirectory(this.resourcePath);
 
                 byte[] coverData = client.DownloadData(Management.IGDBObj.ImageUrl(game.Cover.Value, ImageSize.CoverBig));
 
-                GameMetaData = new()
+                this.GameMetaData = new()
                 {
                     { "name", game.Name },
                     { "genres", string.Join(", ", game.Genres.Values.Select(x => x.Name)) },
@@ -119,35 +121,45 @@ namespace GameLauncher
                     { "cover_url", Management.IGDBObj.ImageUrl(game.Cover.Value, ImageSize.Thumb) }
                 };
 
-                File.WriteAllBytes(coverPath, coverData);
-                DatFile.Save(gameMetadataPath, GameMetaData);
+                File.WriteAllBytes(this.coverPath, coverData);
+                DatFile.Save(this.gameMetadataPath, this.GameMetaData);
 
             }
 
             // We set this above, theres no point reloading it.
             // ??= allows modifications only when initial value is null;
-            GameMetaData ??= DatFile.Open(gameMetadataPath);
+            this.GameMetaData ??= DatFile.Open(this.gameMetadataPath);
+        }
+
+        public void LoadOrDownloadResourcesAsync(Action callback)
+        {
+            new Thread(() =>
+            {
+                this.LoadOrDownloadResources();
+                
+                callback();
+            }).Start();
         }
 
         public void Kill()
         {
-            if (!IsRunning)
+            if (!this.IsRunning)
                 throw new RestorableError("Game not running");
 
-            AttachedProcess.Kill();
-            AttachedProcess = null;
+            this.AttachedProcess.Kill();
+            this.AttachedProcess = null;
         }
 
         public void ScanForExistingProcess(Process[] processes)
         {
             // Look for processes with the same name
-            Process? process = LaunchData.Values
+            Process? process = this.LaunchData.Values
                 .SelectMany(x => processes.Where(z=> z.ProcessName + ".exe" == x))
-                .Where(x => x.GetMainModuleFilepath()?.IsSubPathOf(GamePath) ?? false).FirstOrDefault();
+                .Where(x => x.GetMainModuleFilepath()?.IsSubPathOf(this.GamePath) ?? false).FirstOrDefault();
 
             if (process != null)
             {
-                AttachedProcess = process;
+                this.AttachedProcess = process;
                 return;
             }
 
@@ -156,6 +168,12 @@ namespace GameLauncher
             //    .Where(x => x.GetMainModuleFilepath()?.IsSubPathOf(GamePath) ?? false).FirstOrDefault();
 
             //if (process != null) AttachedProcess = process;
+        }
+
+        public void Uninstall()
+        {
+            throw new NotImplementedException();
+            // rmdir /S /Q "folder"
         }
     }
 }

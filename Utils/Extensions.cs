@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Management;
 using System.Runtime.CompilerServices;
 
-namespace GameLauncher
+namespace GameLauncher.Utils
 {
     public static class Extensions
     {
@@ -63,7 +63,7 @@ namespace GameLauncher
                 throw new ArgumentOutOfRangeException("length", length, "Length is less than zero");
             }
 
-            return (length < value.Length) ? value.Substring(value.Length - length) : value;
+            return length < value.Length ? value.Substring(value.Length - length) : value;
         }
 
         public static string? GetMainModuleFilepath(this Process process)
@@ -77,6 +77,33 @@ namespace GameLauncher
                 return (string)mo["ExecutablePath"];
 
             return null;
+        }
+
+        public static void Spawn(this Control control, Form parent)
+        {
+            control.Dock = DockStyle.Fill;
+            control.Parent = parent;
+            parent.Controls.Add(control);
+            control.BringToFront();
+        }
+
+        public static Color GetColor(this LauncherTheme theme, LauncherThemeKey key)
+        {
+            return theme switch
+            {
+                LauncherTheme.Dark => key switch
+                {
+                    LauncherThemeKey.PrimaryText => Color.White,
+                    LauncherThemeKey.PrimaryBackground => Color.FromArgb(44,44,44),
+                    LauncherThemeKey.SecondaryBackground => Color.FromArgb(60, 60, 60),
+                },
+                LauncherTheme.Light => key switch
+                {
+                    LauncherThemeKey.PrimaryText => Color.Black,
+                    LauncherThemeKey.PrimaryBackground => Color.WhiteSmoke,
+                    LauncherThemeKey.SecondaryBackground => Color.LightGray,
+                }
+            };;
         }
     }
 }

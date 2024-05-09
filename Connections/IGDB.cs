@@ -9,49 +9,63 @@ using System.Threading.Tasks;
 using IGDB;
 using IGDB.Models;
 
-namespace GameLauncher
+namespace GameLauncher.Connections
 {
     internal class IGDBObj
     {
+        public static int Limit = 4;
         private int currentRequests;
-        private const int limit = 4;
         public IGDBClient client;
 
         public IGDBObj(string clientId, string clientSecret)
         {
-            client = new(clientId, clientSecret);
+            this.client = new(clientId, clientSecret);
         }
 
         public Game[] Search(string query, int limit = 1)
         {
-            while (currentRequests >= limit)
+            while (this.currentRequests >= limit)
             {
                 Debug.WriteLine($"Ratelimit protection hit, waiting ({Thread.CurrentThread.ManagedThreadId})");
-                Thread.Sleep(1000); 
+                Thread.Sleep(1000);
             }
 
             try
             {
-                currentRequests++;
+                this.currentRequests++;
 
                 Match m = Regex.Match(query, @"\[(\d+)\]");
 
                 // This allows overriding search by putting an id in [brackets]
                 if (m.Success)
                 {
-                    return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
+                    return this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
                         $"fields id,name,cover.*,summary,genres.name;" +
                         $"where id = {m.Groups[1].Value};")
                         .GetAwaiter().GetResult();
                 }
 
-                return client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
+                return this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
                     $"search \"{query}\";" +
                     $" fields id,name,cover.*,summary,genres.name;" +
                     $" limit {limit};")
                     .GetAwaiter().GetResult();
             }
-            finally { currentRequests--; }
+            finally {
+                this.currentRequests--; }
+        }
+
+        public bool Test()
+        {
+            try
+            {
+                this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,name; limit 1;");
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public string ImageUrl(Cover cover, ImageSize size)

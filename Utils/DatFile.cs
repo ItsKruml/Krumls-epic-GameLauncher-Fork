@@ -1,4 +1,4 @@
-﻿namespace GameLauncher
+﻿namespace GameLauncher.Utils
 {
     public static class DatFile
     {
