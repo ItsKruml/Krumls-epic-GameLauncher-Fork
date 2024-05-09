@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameLauncher.UI.Forms;
@@ -117,7 +118,12 @@ namespace GameLauncher
 
             if (result == DialogResult.OK && form.SelectedGame != null)
             {
-                string newPath = $"{this.game.GamePath.TrimEnd('\\', '/')} [{form.SelectedGame.Id}]";
+                string dir = Path.GetDirectoryName(this.game.GamePath);
+                string name = Path.GetFileName(this.game.GamePath); 
+                name = Regex.Replace(name, @"\[(\d+)\]", "");
+                name = $"{name.TrimEnd()} [{form.SelectedGame.Id}]";
+                
+                string newPath = Path.Join(dir, name);
                 Directory.Move(this.game.GamePath, newPath);
                 this.game.GamePath = newPath;
                     
