@@ -16,11 +16,14 @@
 - [ ] Add auto-updating
 - [ ] Possibly add game source providing
 - [ ] Fix dir names feature
+- [ ] Note unrecognized games
+- [ ] Offline mode
 
 
 
 ## Recently added
 
+- Added folder select when scan dir is inaccessible
 - Scan dir now configurable
 - Added metadata overriding
 - Increased IGDB database reliability

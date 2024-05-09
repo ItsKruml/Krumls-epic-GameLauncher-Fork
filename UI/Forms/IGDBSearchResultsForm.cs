@@ -40,7 +40,7 @@ namespace GameLauncher.UI.Forms
             string query = this.SearchBox.Text;
             if (query.All(char.IsNumber))
                 query = $"[{query}]";
-            
+
             Management.IGDBObj.SearchAsync(query, results =>
             {
                 this._results = results;
@@ -49,15 +49,15 @@ namespace GameLauncher.UI.Forms
                 {
                     this.ResultBox.BeginUpdate();
                     this.ResultBox.Items.Clear();
-                
+
                     // ReSharper disable once CoVariantArrayConversion
                     this.ResultBox.Items.AddRange(results.Select(x => x.Name).ToArray());
-                
+
                     this.ResultBox.EndUpdate();
-                    
+
                     this.SearchButton.Enabled = true;
                 });
-            }, 10);
+            }, 25);
         }
 
         private void SelectButton_Click(object? sender, EventArgs e)

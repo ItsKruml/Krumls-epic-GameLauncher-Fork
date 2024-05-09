@@ -62,13 +62,13 @@
             // 
             // SelectButton
             // 
-            SelectButton.Location = new Point(270, 158);
+            SelectButton.Location = new Point(270, 155);
             SelectButton.Name = "SelectButton";
             SelectButton.Size = new Size(75, 23);
             SelectButton.TabIndex = 3;
             SelectButton.Text = "Select";
             SelectButton.UseVisualStyleBackColor = true;
-            SelectButton.Click += SelectButton_Click;
+            SelectButton.Click += this.SelectButton_Click;
             // 
             // SearchButton
             // 
@@ -78,7 +78,7 @@
             SearchButton.TabIndex = 4;
             SearchButton.Text = "Search";
             SearchButton.UseVisualStyleBackColor = true;
-            SearchButton.Click += SearchButton_Click;
+            SearchButton.Click += this.SearchButton_Click;
             // 
             // IGDBSearchResultsForm
             // 
@@ -95,7 +95,7 @@
             this.MinimizeBox = false;
             this.Name = "IGDBSearchResultsForm";
             this.Text = "IGDB Search Results";
-            this.Load += IGDBSearchResultsForm_Load;
+            this.Load += this.IGDBSearchResultsForm_Load;
             this.ResumeLayout(false);
             this.PerformLayout();
         }

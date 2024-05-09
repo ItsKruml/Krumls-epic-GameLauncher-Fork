@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameLauncher.Utils;
 using IGDB.Models;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GameLauncher
 {
@@ -53,7 +52,10 @@ namespace GameLauncher
 
         public void UpdateUICover()
         {
-            this.CoverImageBox.ImageLocation = this.Game.CoverPath;
+            if (this.Game.HasCover)
+                this.CoverImageBox.ImageLocation = this.Game.CoverPath;
+            else 
+                this.CoverImageBox.Image = ResourceStore.ErrorImage;
         }
 
         private void All_MouseLeave(object sender, EventArgs e)

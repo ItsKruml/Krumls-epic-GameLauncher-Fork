@@ -55,13 +55,19 @@ namespace GameLauncher
         {
             this.Text = $"Game Launcher [BETA {Assembly.GetEntryAssembly()!.GetName().Version.ToString(3)}]";
             
+            if (!Management.Online)
+                this.Text += " [OFFLINE MODE]";
+            
             this.LoadGames();
 
-            ProcessMonitorThread = new(ProcessMonitorLoop);
-            ProcessMonitorThread.Start();
+            if (Management.Online)
+            {
+                ProcessMonitorThread = new(ProcessMonitorLoop);
+                ProcessMonitorThread.Start();
 
-            RichPresenceThread = new(RichPresenceLoop);
-            RichPresenceThread.Start();
+                RichPresenceThread = new(RichPresenceLoop);
+                RichPresenceThread.Start();
+            }
 
             Management.ThemeChange += this.Management_ThemeChange;
         }
@@ -131,7 +137,7 @@ namespace GameLauncher
             string folder = folderDialog.SelectedPath;
 
             string launchFile = Path.Join(folder, "launch.dat");
-            DatFile.Save(launchFile, new Dictionary<string, string> { { "default", executable } });
+            DatFile.Save(launchFile, new() { { "default", executable } });
 
             MessageBox.Show("Game successfully added", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

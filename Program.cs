@@ -27,21 +27,25 @@ namespace GameLauncher
             }
 
             ApplicationConfiguration.Initialize();
-            
+
+            Management.Online = IGDBObj.TestConnectivity();
             Management.Config = Config.Load();
             
-            if (!Management.IGDBViable)
-                Application.Run(new IGDBDetailsForm());
-            
-            if (!new IGDBObj(Management.Config.IGDBId!, Management.Config.IGDBSecret!).Test())
-                Application.Run(new IGDBDetailsForm());
-            
-            Management.IGDBObj = new(Management.Config.IGDBId!, Management.Config.IGDBSecret!);
-            Management.RichPresence = new("1237693349612224562");
+            if (Management.Online)
+            {
+                if (!Management.IGDBViable)
+                    Application.Run(new IGDBDetailsForm());
+
+                if (!new IGDBObj(Management.Config.IGDBId!, Management.Config.IGDBSecret!).TestCredentials())
+                    Application.Run(new IGDBDetailsForm());
+                
+                Management.IGDBObj = new(Management.Config.IGDBId!, Management.Config.IGDBSecret!);
+                Management.RichPresence = new("1237693349612224562");
+            }
             
             Application.Run(new Form1());
         }
-
+        
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             Exception error = (Exception)e.ExceptionObject;

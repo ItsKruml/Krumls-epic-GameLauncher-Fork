@@ -39,6 +39,7 @@ namespace GameLauncher
         private string launchPath;
 
         public string? CoverPath => this.coverPath;
+        public bool HasCover => this.CoverPath != null && File.Exists(this.CoverPath);
 
         public LocalGame(string filePath)
         {
@@ -59,12 +60,32 @@ namespace GameLauncher
 
         public static LocalGame[] GetLocalGames(string scanDir)
         {
-            foreach (string file in Directory.GetFiles(scanDir, "HOW TO RUN GAME!!.txt", SearchOption.AllDirectories))
-                GenerateLaunchFromHowToLaunch(file);
+            try
+            {
+                foreach (string file in Directory.GetFiles(scanDir, "HOW TO RUN GAME!!.txt", SearchOption.AllDirectories))
+                    GenerateLaunchFromHowToLaunch(file);
 
-            return Directory.GetFiles(scanDir, "launch.dat", SearchOption.AllDirectories)
-                .Select(x => new LocalGame(Path.GetDirectoryName(x)))
-                .ToArray();
+                return Directory.GetFiles(scanDir, "launch.dat", SearchOption.AllDirectories)
+                    .Select(x => new LocalGame(Path.GetDirectoryName(x)))
+                    .ToArray();
+            }
+            catch (UnauthorizedAccessException error)
+            {
+                MessageBox.Show("Access denied to scan directory, please change directory in config file or run with elevated privelages", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                FolderBrowserDialog folderDialog = new();
+                folderDialog.Description = "Select a directory to scan for games";
+                folderDialog.ShowNewFolderButton = false;
+                folderDialog.SelectedPath = scanDir;
+                DialogResult result = folderDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Management.Config.ScanDir = folderDialog.SelectedPath;
+                    Management.Config.Save();
+                    return GetLocalGames(folderDialog.SelectedPath);
+                }
+                else
+                    return Array.Empty<LocalGame>();
+            }
         }
 
         private static void GenerateLaunchFromHowToLaunch(string filePath)
@@ -79,7 +100,7 @@ namespace GameLauncher
             Match m = Regex.Match(File.ReadAllText(filePath), "right click and run '(.*?)' as administrator");
             string file = m.Groups[1].Value + ".exe";
 
-            DatFile.Save(launchFile, new Dictionary<string, string> { { "default", file } });
+            DatFile.Save(launchFile, new() { { "default", file } });
         }
 
         public Process Launch(string mode = "default")
@@ -118,10 +139,11 @@ namespace GameLauncher
 
         public void LoadOrDownloadResources()
         {
-            if (!this.HasResources())
+            if (!this.HasResources() && Management.Online)
             {
                 Game? game = Management.IGDBObj.Search(Path.GetFileName(this.GamePath))
                         .FirstOrDefault();
+                
 
                 if (game == null)
                 {
@@ -163,7 +185,8 @@ namespace GameLauncher
 
             // We set this above, theres no point reloading it.
             // ??= allows modifications only when initial value is null;
-            this.GameMetaData ??= DatFile.Open(this.gameMetadataPath);
+            if (File.Exists(this.gameMetadataPath))
+                this.GameMetaData ??= DatFile.Open(this.gameMetadataPath);
         }
 
         public void LoadOrDownloadResourcesAsync(Action callback)

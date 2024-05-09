@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameLauncher.UI.Forms;
+using GameLauncher.Utils;
 
 namespace GameLauncher
 {
@@ -47,9 +48,12 @@ namespace GameLauncher
 
         private void UpdateUIFromMetadata()
         {
-            this.TitleLabel.Text = this.game.Name;
-            this.DescriptionLabel.Text = this.game.Summary;
-            this.ThumnailImageBox.ImageLocation = this.game.CoverPath;
+            this.TitleLabel.Text = this.game.Name ?? Path.GetFileName(game.GamePath);
+            this.DescriptionLabel.Text = this.game.Summary ?? "No description available";
+            if (this.game.HasCover)
+                this.ThumnailImageBox.ImageLocation = this.game.CoverPath;
+            else 
+                this.ThumnailImageBox.Image = ResourceStore.ErrorImage;
             
             this.MainForm.GetPanel(this.game).UpdateUICover();
         }

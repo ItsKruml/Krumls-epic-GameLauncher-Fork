@@ -40,7 +40,7 @@ namespace GameLauncher
             
             this.SetUpButton.Enabled = false;
             
-            new IGDBObj(clientId, clientSecret).TestAsync(valid =>
+            new IGDBObj(clientId, clientSecret).TestCredentialsAsync(valid =>
             {
                 if (!valid)
                 {

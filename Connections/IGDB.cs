@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -44,10 +45,12 @@ namespace GameLauncher.Connections
                         $"where id = {m.Groups[1].Value};")
                         .GetAwaiter().GetResult();
                 }
-
+                
                 return this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
                     $"search \"{query}\";" +
-                    $" fields id,name,cover.*,summary,genres.name;" +
+                    $" fields id,name,cover.*,summary,genres.name,version_parent;" +
+                    // $" sort rating desc;" +
+                    $"where version_parent = null;" +
                     $" limit {limit};")
                     .GetAwaiter().GetResult();
             }
@@ -63,7 +66,7 @@ namespace GameLauncher.Connections
             }).Start();
         }
 
-        public bool Test()
+        public bool TestCredentials()
         {
             try
             {
@@ -76,17 +79,34 @@ namespace GameLauncher.Connections
             }
         }
 
+        public static bool TestConnectivity()
+        {
+            // try download the main page
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create("https://www.google.com/");
+                request.KeepAlive = false;
+                request.Timeout = 3000;
+                using HttpWebResponse _ = (HttpWebResponse)request.GetResponse();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public string ImageUrl(Cover cover, ImageSize size)
         {
             return "https:" + cover.Url
                     .Replace("t_thumb", $"t_{size.GetString()}");
         }
 
-        public void TestAsync(Action<bool> callback)
+        public void TestCredentialsAsync(Action<bool> callback)
         {
             new Thread(() =>
             {
-                callback(this.Test());
+                callback(this.TestCredentials());
             }).Start();
         }
     }

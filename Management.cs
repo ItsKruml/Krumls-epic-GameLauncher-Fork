@@ -18,6 +18,8 @@ namespace GameLauncher
         public static RichPresence RichPresence;
 
         public static bool Running = true;
+        public static bool Online = true;
+        
         public static Config Config;
         public static bool IGDBViable => !string.IsNullOrEmpty(Config.IGDBId) && !string.IsNullOrEmpty(Config.IGDBSecret);
         public static event Action<LauncherTheme> ThemeChange;

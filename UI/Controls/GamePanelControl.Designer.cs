@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamePanelControl));
             CoverImageBox = new PictureBox();
             NameLabel = new Label();
             PlayButton = new Button();
@@ -38,9 +39,11 @@
             // CoverImageBox
             // 
             CoverImageBox.Dock = DockStyle.Fill;
+            CoverImageBox.Image = (Image)resources.GetObject("CoverImageBox.Image");
             CoverImageBox.Location = new Point(0, 0);
+            CoverImageBox.Margin = new Padding(6, 6, 6, 6);
             CoverImageBox.Name = "CoverImageBox";
-            CoverImageBox.Size = new Size(198, 264);
+            CoverImageBox.Size = new Size(368, 563);
             CoverImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
             CoverImageBox.TabIndex = 0;
             CoverImageBox.TabStop = false;
@@ -54,8 +57,9 @@
             NameLabel.Dock = DockStyle.Top;
             NameLabel.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
             NameLabel.Location = new Point(0, 0);
+            NameLabel.Margin = new Padding(6, 0, 6, 0);
             NameLabel.Name = "NameLabel";
-            NameLabel.Size = new Size(198, 108);
+            NameLabel.Size = new Size(368, 230);
             NameLabel.TabIndex = 1;
             NameLabel.TextAlign = ContentAlignment.TopCenter;
             NameLabel.Click += this.MoreButton_Click;
@@ -65,9 +69,10 @@
             // PlayButton
             // 
             PlayButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            PlayButton.Location = new Point(120, 238);
+            PlayButton.Location = new Point(223, 508);
+            PlayButton.Margin = new Padding(6, 6, 6, 6);
             PlayButton.Name = "PlayButton";
-            PlayButton.Size = new Size(75, 23);
+            PlayButton.Size = new Size(139, 49);
             PlayButton.TabIndex = 2;
             PlayButton.Text = "Play";
             PlayButton.UseVisualStyleBackColor = true;
@@ -79,9 +84,10 @@
             // MoreButton
             // 
             MoreButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            MoreButton.Location = new Point(83, 238);
+            MoreButton.Location = new Point(154, 508);
+            MoreButton.Margin = new Padding(6, 6, 6, 6);
             MoreButton.Name = "MoreButton";
-            MoreButton.Size = new Size(31, 23);
+            MoreButton.Size = new Size(58, 49);
             MoreButton.TabIndex = 3;
             MoreButton.Text = "...";
             MoreButton.UseVisualStyleBackColor = true;
@@ -92,15 +98,16 @@
             // 
             // GamePanelControl
             // 
-            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleDimensions = new SizeF(13F, 32F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = Color.White;
             this.Controls.Add(MoreButton);
             this.Controls.Add(PlayButton);
             this.Controls.Add(NameLabel);
             this.Controls.Add(CoverImageBox);
+            this.Margin = new Padding(6, 6, 6, 6);
             this.Name = "GamePanelControl";
-            this.Size = new Size(198, 264);
+            this.Size = new Size(368, 563);
             this.Load += this.GamePanelControl_Load;
             ((System.ComponentModel.ISupportInitialize)CoverImageBox).EndInit();
             this.ResumeLayout(false);
