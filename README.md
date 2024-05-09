@@ -20,6 +20,7 @@
 
 ## Recently added
 
+- Increased IGDB database reliability
 - File restructure
 - Progress bar moved out of the way
 - Fixed crash when refreshing metadata in detail view

@@ -59,7 +59,7 @@ namespace GameLauncher.Connections
         {
             try
             {
-                this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,name; limit 1;");
+                this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,name; limit 1;").GetAwaiter().GetResult();
                 return true;
             }
             catch (Exception)
@@ -72,6 +72,14 @@ namespace GameLauncher.Connections
         {
             return "https:" + cover.Url
                     .Replace("t_thumb", $"t_{size.GetString()}");
+        }
+
+        public void TestAsync(Action<bool> callback)
+        {
+            new Thread(() =>
+            {
+                callback(this.Test());
+            }).Start();
         }
     }
 

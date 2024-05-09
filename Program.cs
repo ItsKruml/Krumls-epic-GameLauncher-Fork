@@ -1,3 +1,5 @@
+using GameLauncher.Connections;
+
 namespace GameLauncher
 {
     internal static class Program
@@ -28,9 +30,10 @@ namespace GameLauncher
             
             Management.Config = Config.Load();
             
-            //new("0h7tabwhz9sediiyafjefsyk2nz115", "6gq5e87pm2cs79mnejml1vizattrt9")
-            
             if (!Management.IGDBViable)
+                Application.Run(new IGDBDetailsForm());
+            
+            if (!new IGDBObj(Management.Config.IGDBId!, Management.Config.IGDBSecret!).Test())
                 Application.Run(new IGDBDetailsForm());
             
             Management.IGDBObj = new(Management.Config.IGDBId!, Management.Config.IGDBSecret!);
