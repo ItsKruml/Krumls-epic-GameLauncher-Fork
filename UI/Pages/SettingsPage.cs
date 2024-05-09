@@ -34,6 +34,7 @@ namespace GameLauncher
 
             settings.Add("Discord RPC", Management.Config.DiscordRPCEnabled);
             settings.Add("Theme", Management.Config.Theme);
+            settings.Add("Scan Dir", Management.Config.ScanDir);
 
             foreach (KeyValuePair<string, object> item in settings)
             {
@@ -72,6 +73,16 @@ namespace GameLauncher
             if (key == "IGDB Rate limit")
                 Management.Config.IGDBRateLimit = (int)value;
             
+            if (key == "Scan Dir")
+            {
+                if (Directory.Exists((string)value))
+                {
+                    Management.Config.ScanDir = (string)value;
+                    MessageBox.Show("Scan directory changed, please restart the launcher for changes to take effect.",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            
             Management.Config.Save();
         }
 
@@ -92,8 +103,8 @@ namespace GameLauncher
 
         public LauncherTheme Theme = LauncherTheme.Light;
         public bool DiscordRPCEnabled = true;
+        public string ScanDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         
-
         public void Save()
         {
             Directory.CreateDirectory(AppDir);

@@ -20,6 +20,8 @@
 
 ## Recently added
 
+- Scan dir now configurable
+- Added metadata overriding
 - Increased IGDB database reliability
 - File restructure
 - Progress bar moved out of the way

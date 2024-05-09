@@ -9,7 +9,16 @@ namespace GameLauncher
 {
     public class LocalGame
     {
-        public readonly string GamePath;
+        public string GamePath 
+        {
+            get => this._gamePath;
+            set
+            {
+                this._gamePath = value;
+                this.ReloadFromPath();
+            }
+        }
+        private string _gamePath;
 
         public string[] LaunchNames => this.LaunchData.Keys.ToArray();
         public Dictionary<string, string> LaunchData;
@@ -23,16 +32,22 @@ namespace GameLauncher
         public string? Summary => this.GameMetaData?["summary"];
         public string? CoverUrl => this.GameMetaData?["cover_url"];
 
-        private readonly string resourcePath;
-        private readonly string gameMetadataPath;
-        private readonly string coverPath;
-        private readonly string launchPath;
+        private string resourcePath;
+        private string gameMetadataPath;
+        private string coverPath;
+        private string launchPath;
 
         public string? CoverPath => this.coverPath;
 
         public LocalGame(string filePath)
         {
             this.GamePath = filePath;
+            
+            this.ReloadFromPath();
+        }
+
+        private void ReloadFromPath()
+        {
             this.launchPath = Path.Join(this.GamePath, "launch.dat");
             this.resourcePath = Path.Join(this.GamePath, "gl.resources");
             this.gameMetadataPath = Path.Combine(this.resourcePath, "metadata.dat");

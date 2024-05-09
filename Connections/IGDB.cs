@@ -54,6 +54,14 @@ namespace GameLauncher.Connections
             finally {
                 this.currentRequests--; }
         }
+        
+        public void SearchAsync(string query, Action<Game[]> callback, int limit = 1)
+        {
+            new Thread(() =>
+            {
+                callback(this.Search(query, limit));
+            }).Start();
+        }
 
         public bool Test()
         {

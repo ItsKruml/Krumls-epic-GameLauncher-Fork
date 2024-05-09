@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Net;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using GameLauncher.Utils;
 using IGDB.Models;
@@ -8,7 +9,6 @@ namespace GameLauncher
 {
     public partial class Form1 : Form
     {
-        public static string ScanDir = "D:/NonSteamLibrary";
         private static LocalGame[]? Games;
 
         private static Thread? ProcessMonitorThread;
@@ -53,7 +53,7 @@ namespace GameLauncher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = $"Game Launcher [BETA {Application.ProductVersion}]";
+            this.Text = $"Game Launcher [BETA {Assembly.GetEntryAssembly()!.GetName().Version}]";
             
             this.LoadGames();
 
@@ -76,7 +76,7 @@ namespace GameLauncher
         {
             this.flowLayoutPanel1.Controls.Clear();
 
-            Games = LocalGame.GetLocalGames(ScanDir);
+            Games = LocalGame.GetLocalGames(Management.Config.ScanDir);
 
             this.LoadingProgressBar.Visible = true;
             this.LoadingProgressBar.Value = 0;
@@ -113,7 +113,7 @@ namespace GameLauncher
             OpenFileDialog openDialog = new();
             openDialog.Title = "Select your executable";
             openDialog.Multiselect = false;
-            openDialog.InitialDirectory = ScanDir;
+            openDialog.InitialDirectory = Management.Config.ScanDir;
             DialogResult result = openDialog.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -122,7 +122,7 @@ namespace GameLauncher
             string executable = Path.GetFileName(openDialog.FileName);
 
             FolderBrowserDialog folderDialog = new();
-            folderDialog.InitialDirectory = ScanDir;
+            folderDialog.InitialDirectory = Management.Config.ScanDir;
             result = folderDialog.ShowDialog();
 
             if (result != DialogResult.OK)
@@ -175,5 +175,9 @@ namespace GameLauncher
         {
             throw new NotImplementedException();
         }
+
+        public GamePanelControl GetPanel(LocalGame game) 
+            => this.flowLayoutPanel1.Controls.OfType<GamePanelControl>()
+                .First(x => x.Game == game);
     }
 }

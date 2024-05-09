@@ -68,6 +68,7 @@
             SelectButton.TabIndex = 3;
             SelectButton.Text = "Select";
             SelectButton.UseVisualStyleBackColor = true;
+            SelectButton.Click += SelectButton_Click;
             // 
             // SearchButton
             // 
@@ -77,6 +78,7 @@
             SearchButton.TabIndex = 4;
             SearchButton.Text = "Search";
             SearchButton.UseVisualStyleBackColor = true;
+            SearchButton.Click += SearchButton_Click;
             // 
             // IGDBSearchResultsForm
             // 
@@ -92,7 +94,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "IGDBSearchResultsForm";
-            this.Text = "IGDBSearchResults";
+            this.Text = "IGDB Search Results";
+            this.Load += IGDBSearchResultsForm_Load;
             this.ResumeLayout(false);
             this.PerformLayout();
         }

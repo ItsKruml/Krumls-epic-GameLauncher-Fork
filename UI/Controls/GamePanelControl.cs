@@ -18,13 +18,13 @@ namespace GameLauncher
 {
     public partial class GamePanelControl : UserControl, ITick
     {
+        public LocalGame Game;
         private Form1 originForm;
-        private LocalGame game;
         private bool stillLoading = true;
         public GamePanelControl(Form1 originForm, LocalGame game)
         {
             this.originForm = originForm;
-            this.game = game;
+            this.Game = game;
             this.InitializeComponent();
         }
 
@@ -35,20 +35,25 @@ namespace GameLauncher
             this.MoreButton.Parent = this.CoverImageBox;
             this.PlayButton.Parent = this.CoverImageBox;
 
-            this.game.LoadOrDownloadResourcesAsync(() =>
+            this.Game.LoadOrDownloadResourcesAsync(() =>
             {
                 this.stillLoading = false;
 
                 this.Invoke(() =>
                 {
                     this.UpdateStartButton();
-                    this.CoverImageBox.ImageLocation = this.game.CoverPath;
+                    this.UpdateUICover();
 
                     this.originForm.TaskCompleted();
                 });
             });
 
             this.UpdateStartButton();
+        }
+
+        public void UpdateUICover()
+        {
+            this.CoverImageBox.ImageLocation = this.Game.CoverPath;
         }
 
         private void All_MouseLeave(object sender, EventArgs e)
@@ -61,7 +66,7 @@ namespace GameLauncher
             this.UpdatePos();
         }
 
-        public void UpdatePos()
+        private void UpdatePos()
         {
             if (this.stillLoading) return;
 
@@ -74,7 +79,7 @@ namespace GameLauncher
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
-            if (!this.game.IsRunning) this.game.Launch();
+            if (!this.Game.IsRunning) this.Game.Launch();
 
             this.UpdateStartButton();
         }
@@ -83,14 +88,14 @@ namespace GameLauncher
         {
             if (this.stillLoading) return;
 
-            new GameDetailsControl(this.game).Spawn(this.ParentForm!);
+            new GameDetailsControl(this.Game).Spawn(this.ParentForm!);
         }
 
         private void UpdateStartButton()
         {
-            this.PlayButton.Text = this.game.IsRunning ? "Running" : "Play";
-            this.PlayButton.ForeColor = this.game.IsRunning ? Color.Green : Color.Black;
-            this.PlayButton.Enabled = !this.game.IsRunning;
+            this.PlayButton.Text = this.Game.IsRunning ? "Running" : "Play";
+            this.PlayButton.ForeColor = this.Game.IsRunning ? Color.Green : Color.Black;
+            this.PlayButton.Enabled = !this.Game.IsRunning;
             if (this.stillLoading) this.PlayButton.Enabled = false;
         }
         public void Tick() => this.UpdateStartButton();

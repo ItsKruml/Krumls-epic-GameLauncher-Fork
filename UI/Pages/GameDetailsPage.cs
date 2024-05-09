@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GameLauncher.UI.Forms;
 
 namespace GameLauncher
 {
     public partial class GameDetailsControl : UserControl, ITick
     {
+        public Form1? MainForm;
         private LocalGame game;
         public GameDetailsControl(LocalGame game)
         {
@@ -30,7 +32,9 @@ namespace GameLauncher
 
         private void GameDetailsControl_Load(object sender, EventArgs e)
         {
-            this.UpdateFromMetadata();
+            this.MainForm = (this.ParentForm as Form1)!;
+            
+            this.UpdateUIFromMetadata();
 
             foreach (string profile in this.game.LaunchNames) this.playToolStripMenuItem.DropDownItems.Add(new ToolStripLabel(profile));
 
@@ -40,11 +44,13 @@ namespace GameLauncher
             this.UpdateStartButton();
         }
 
-        private void UpdateFromMetadata()
+        private void UpdateUIFromMetadata()
         {
             this.TitleLabel.Text = this.game.Name;
             this.DescriptionLabel.Text = this.game.Summary;
             this.ThumnailImageBox.ImageLocation = this.game.CoverPath;
+            
+            this.MainForm.GetPanel(this.game).UpdateUICover();
         }
 
         private void Item_Click(object? sender, EventArgs e)
@@ -76,11 +82,16 @@ namespace GameLauncher
 
         private void refreshMetadataToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.RefreshMetadata();
+        }
+
+        private void RefreshMetadata()
+        {
             if (this.game.HasResources()) this.game.DeleteResources();
 
             this.game.LoadOrDownloadResourcesAsync(() =>
             {
-                this.Invoke(this.UpdateFromMetadata);
+                this.Invoke(this.UpdateUIFromMetadata);
 
                 MessageBox.Show("Refreshed game metadata", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
@@ -101,7 +112,21 @@ namespace GameLauncher
 
         private void overrideMetadataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Management.IGDBObj.Search(game.Name, 10);
+            IGDBSearchResultsForm form = new(Path.GetFileName(this.game.GamePath));
+            form.Show();
+            
+            form.FormClosed += (sender, args) =>
+            {
+                if (form.SelectedGame != null)
+                {
+                    string newPath = $"{this.game.GamePath.TrimEnd('\\', '/')} [{form.SelectedGame.Id}]";
+                    Directory.Move(this.game.GamePath, newPath);
+                    this.game.GamePath = newPath;
+                    
+                    this.RefreshMetadata();
+                    this.UpdateUIFromMetadata();
+                }
+            };
         }
     }
 }
