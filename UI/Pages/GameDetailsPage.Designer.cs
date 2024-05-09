@@ -38,9 +38,11 @@
             MoreMenuStrip = new ContextMenuStrip(this.components);
             playToolStripMenuItem = new ToolStripMenuItem();
             manageToolStripMenuItem = new ToolStripMenuItem();
-            uninstallToolStripMenuItem = new ToolStripMenuItem();
+            overrideMetadataToolStripMenuItem = new ToolStripMenuItem();
             refreshMetadataToolStripMenuItem = new ToolStripMenuItem();
             openInExplorerToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator1 = new ToolStripSeparator();
+            uninstallToolStripMenuItem = new ToolStripMenuItem();
             BackButton = new Button();
             ((System.ComponentModel.ISupportInitialize)ThumnailImageBox).BeginInit();
             MoreMenuStrip.SuspendLayout();
@@ -110,30 +112,43 @@
             // 
             // manageToolStripMenuItem
             // 
-            manageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { uninstallToolStripMenuItem, refreshMetadataToolStripMenuItem, openInExplorerToolStripMenuItem });
+            manageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { overrideMetadataToolStripMenuItem, refreshMetadataToolStripMenuItem, openInExplorerToolStripMenuItem, toolStripSeparator1, uninstallToolStripMenuItem });
             manageToolStripMenuItem.Name = "manageToolStripMenuItem";
             manageToolStripMenuItem.Size = new Size(117, 22);
             manageToolStripMenuItem.Text = "Manage";
             // 
-            // uninstallToolStripMenuItem
+            // overrideMetadataToolStripMenuItem
             // 
-            uninstallToolStripMenuItem.Name = "uninstallToolStripMenuItem";
-            uninstallToolStripMenuItem.Size = new Size(166, 22);
-            uninstallToolStripMenuItem.Text = "Uninstall";
+            overrideMetadataToolStripMenuItem.Name = "overrideMetadataToolStripMenuItem";
+            overrideMetadataToolStripMenuItem.Size = new Size(180, 22);
+            overrideMetadataToolStripMenuItem.Text = "Override metadata";
+            overrideMetadataToolStripMenuItem.Click += this.overrideMetadataToolStripMenuItem_Click;
             // 
             // refreshMetadataToolStripMenuItem
             // 
             refreshMetadataToolStripMenuItem.Name = "refreshMetadataToolStripMenuItem";
-            refreshMetadataToolStripMenuItem.Size = new Size(166, 22);
+            refreshMetadataToolStripMenuItem.Size = new Size(180, 22);
             refreshMetadataToolStripMenuItem.Text = "Refresh metadata";
             refreshMetadataToolStripMenuItem.Click += this.refreshMetadataToolStripMenuItem_Click;
             // 
             // openInExplorerToolStripMenuItem
             // 
             openInExplorerToolStripMenuItem.Name = "openInExplorerToolStripMenuItem";
-            openInExplorerToolStripMenuItem.Size = new Size(166, 22);
+            openInExplorerToolStripMenuItem.Size = new Size(180, 22);
             openInExplorerToolStripMenuItem.Text = "Open in explorer";
             openInExplorerToolStripMenuItem.Click += this.openInExplorerToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(177, 6);
+            // 
+            // uninstallToolStripMenuItem
+            // 
+            uninstallToolStripMenuItem.Name = "uninstallToolStripMenuItem";
+            uninstallToolStripMenuItem.Size = new Size(180, 22);
+            uninstallToolStripMenuItem.Text = "Uninstall";
+            uninstallToolStripMenuItem.Click += this.uninstallToolStripMenuItem_Click;
             // 
             // BackButton
             // 
@@ -178,5 +193,7 @@
         private ToolStripMenuItem refreshMetadataToolStripMenuItem;
         private ToolStripMenuItem openInExplorerToolStripMenuItem;
         private Button BackButton;
+        private ToolStripMenuItem overrideMetadataToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator1;
     }
 }

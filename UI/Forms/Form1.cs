@@ -53,6 +53,8 @@ namespace GameLauncher
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = $"Game Launcher [BETA {Application.ProductVersion}]";
+            
             this.LoadGames();
 
             ProcessMonitorThread = new(ProcessMonitorLoop);

@@ -78,7 +78,7 @@ namespace GameLauncher
         {
             if (this.game.HasResources()) this.game.DeleteResources();
 
-            this.game.LoadOrDownloadResourcesAsync(() => 
+            this.game.LoadOrDownloadResourcesAsync(() =>
             {
                 this.Invoke(this.UpdateFromMetadata);
 
@@ -93,5 +93,15 @@ namespace GameLauncher
         }
 
         public void Tick() => this.UpdateStartButton();
+
+        private void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            game.Uninstall();
+        }
+
+        private void overrideMetadataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Management.IGDBObj.Search(game.Name, 10);
+        }
     }
 }
