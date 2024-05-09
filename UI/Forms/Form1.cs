@@ -53,7 +53,7 @@ namespace GameLauncher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = $"Game Launcher [BETA {Assembly.GetEntryAssembly()!.GetName().Version}]";
+            this.Text = $"Game Launcher [BETA {Assembly.GetEntryAssembly()!.GetName().Version.ToString(3)}]";
             
             this.LoadGames();
 
