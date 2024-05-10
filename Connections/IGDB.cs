@@ -45,14 +45,14 @@ namespace GameLauncher.Connections
                         $"where id = {m.Groups[1].Value};")
                         .GetAwaiter().GetResult();
                 }
-                
-                return this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games,
-                    $"search \"{query}\";" +
-                    $" fields id,name,cover.*,summary,genres.name,version_parent;" +
-                    // $" sort rating desc;" +
-                    $"where version_parent = null;" +
-                    $" limit {limit};")
-                    .GetAwaiter().GetResult();
+
+                return this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games, $"search \"{query}\";" +
+                        $" fields id,name,cover.*,summary,genres.name,version_parent.id,parent_game.id;" +
+                        $" limit 100;")
+                    .GetAwaiter().GetResult()
+                    .Where(x => x.ParentGame == null && x.VersionParent == null)
+                    .Take(limit)
+                    .ToArray();
             }
             finally {
                 this.currentRequests--; }
@@ -71,6 +71,7 @@ namespace GameLauncher.Connections
             try
             {
                 this.client.QueryAsync<Game>(IGDBClient.Endpoints.Games, "fields id,name; limit 1;").GetAwaiter().GetResult();
+                
                 return true;
             }
             catch (Exception)

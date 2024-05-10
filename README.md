@@ -23,6 +23,7 @@
 
 ## Recently added
 
+- Changed search query to exclude DLCs and updates
 - Fixed workingdir issue causing some games to start
 - Added offline mode
 - Added folder select when scan dir is inaccessible
