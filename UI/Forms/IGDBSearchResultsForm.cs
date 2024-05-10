@@ -37,6 +37,7 @@ namespace GameLauncher.UI.Forms
         private void PerformSearch()
         {
             this.SearchButton.Enabled = false;
+            this.SelectButton.Enabled = false;
             string query = this.SearchBox.Text;
             if (query.All(char.IsNumber))
                 query = $"[{query}]";
@@ -56,6 +57,7 @@ namespace GameLauncher.UI.Forms
                     this.ResultBox.EndUpdate();
 
                     this.SearchButton.Enabled = true;
+                    this.SelectButton.Enabled = true;
                 });
             }, 25);
         }
@@ -64,6 +66,12 @@ namespace GameLauncher.UI.Forms
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                PerformSearch();
         }
     }
 }

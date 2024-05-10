@@ -233,8 +233,21 @@ namespace GameLauncher
 
         public void Uninstall()
         {
-            throw new NotImplementedException();
             // rmdir /S /Q "folder"
+            
+            ProcessStartInfo psi = new("cmd.exe", $"/c rmdir /S /Q \"{this.GamePath}\"");
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            psi.CreateNoWindow = true;
+            psi.UseShellExecute = false;
+            Process.Start(psi);
+        }
+
+        public void Forget()
+        {
+            if (this.HasResources())
+                this.DeleteResources();
+            
+            File.Delete(this.launchPath);
         }
     }
 }

@@ -38,33 +38,38 @@
             // ResultBox
             // 
             ResultBox.FormattingEnabled = true;
-            ResultBox.ItemHeight = 15;
-            ResultBox.Location = new Point(12, 40);
+            ResultBox.ItemHeight = 32;
+            ResultBox.Location = new Point(22, 85);
+            ResultBox.Margin = new Padding(6, 6, 6, 6);
             ResultBox.Name = "ResultBox";
-            ResultBox.Size = new Size(333, 109);
+            ResultBox.Size = new Size(615, 228);
             ResultBox.TabIndex = 0;
             // 
             // SearchBox
             // 
-            SearchBox.Location = new Point(82, 6);
+            SearchBox.Location = new Point(154, 18);
+            SearchBox.Margin = new Padding(6, 6, 6, 6);
             SearchBox.Name = "SearchBox";
-            SearchBox.Size = new Size(182, 23);
+            SearchBox.Size = new Size(335, 39);
             SearchBox.TabIndex = 1;
+            SearchBox.KeyDown += this.SearchBox_KeyDown;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(15, 21);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(64, 15);
+            label1.Size = new Size(131, 32);
             label1.TabIndex = 2;
             label1.Text = "Term or ID:";
             // 
             // SelectButton
             // 
-            SelectButton.Location = new Point(270, 155);
+            SelectButton.Location = new Point(501, 331);
+            SelectButton.Margin = new Padding(6, 6, 6, 6);
             SelectButton.Name = "SelectButton";
-            SelectButton.Size = new Size(75, 23);
+            SelectButton.Size = new Size(139, 49);
             SelectButton.TabIndex = 3;
             SelectButton.Text = "Select";
             SelectButton.UseVisualStyleBackColor = true;
@@ -72,9 +77,10 @@
             // 
             // SearchButton
             // 
-            SearchButton.Location = new Point(270, 6);
+            SearchButton.Location = new Point(501, 13);
+            SearchButton.Margin = new Padding(6, 6, 6, 6);
             SearchButton.Name = "SearchButton";
-            SearchButton.Size = new Size(75, 23);
+            SearchButton.Size = new Size(139, 49);
             SearchButton.TabIndex = 4;
             SearchButton.Text = "Search";
             SearchButton.UseVisualStyleBackColor = true;
@@ -82,15 +88,16 @@
             // 
             // IGDBSearchResultsForm
             // 
-            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleDimensions = new SizeF(13F, 32F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(351, 185);
+            this.ClientSize = new Size(652, 395);
             this.Controls.Add(SearchButton);
             this.Controls.Add(SelectButton);
             this.Controls.Add(label1);
             this.Controls.Add(SearchBox);
             this.Controls.Add(ResultBox);
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.Margin = new Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "IGDBSearchResultsForm";

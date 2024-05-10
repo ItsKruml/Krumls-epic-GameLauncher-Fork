@@ -35,7 +35,7 @@ namespace GameLauncher
         private void GameDetailsControl_Load(object sender, EventArgs e)
         {
             this.MainForm = (this.ParentForm as Form1)!;
-            
+
             this.UpdateUIFromMetadata();
 
             foreach (string profile in this.game.LaunchNames) this.playToolStripMenuItem.DropDownItems.Add(new ToolStripLabel(profile));
@@ -52,9 +52,9 @@ namespace GameLauncher
             this.DescriptionLabel.Text = this.game.Summary ?? "No description available";
             if (this.game.HasCover)
                 this.ThumnailImageBox.ImageLocation = this.game.CoverPath;
-            else 
+            else
                 this.ThumnailImageBox.Image = ResourceStore.ErrorImage;
-            
+
             this.MainForm.GetPanel(this.game).UpdateUICover();
         }
 
@@ -77,9 +77,10 @@ namespace GameLauncher
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            this.Parent!.Controls.Remove(this);
+            Close();
         }
 
+        private void Close() => this.Parent!.Controls.Remove(this);
         private void openInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", this.game.GamePath);
@@ -112,7 +113,15 @@ namespace GameLauncher
 
         private void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            game.Uninstall();
+            if (MessageBox.Show("Are you sure you want to uninstall this game? (Its files will be PERMANENTLY deleted)", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+            
+            GamePanelControl panel = this.MainForm.GetPanel(this.game);
+            panel.Parent.Controls.Remove(panel);
+            
+            this.game.Uninstall();
+            
+            this.Close();
         }
 
         private void overrideMetadataToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,17 +132,30 @@ namespace GameLauncher
             if (result == DialogResult.OK && form.SelectedGame != null)
             {
                 string dir = Path.GetDirectoryName(this.game.GamePath);
-                string name = Path.GetFileName(this.game.GamePath); 
+                string name = Path.GetFileName(this.game.GamePath);
                 name = Regex.Replace(name, @"\[(\d+)\]", "");
                 name = $"{name.TrimEnd()} [{form.SelectedGame.Id}]";
-                
+
                 string newPath = Path.Join(dir, name);
                 Directory.Move(this.game.GamePath, newPath);
                 this.game.GamePath = newPath;
-                    
+
                 this.RefreshMetadata();
                 this.UpdateUIFromMetadata();
             }
+        }
+
+        private void forgetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to forget this game?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+            
+            GamePanelControl panel = this.MainForm.GetPanel(this.game);
+            panel.Parent.Controls.Remove(panel);
+            
+            this.game.Forget();
+            
+            this.Close();
         }
     }
 }
