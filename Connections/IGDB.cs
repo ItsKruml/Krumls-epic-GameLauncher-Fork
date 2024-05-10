@@ -78,7 +78,7 @@ namespace GameLauncher.Connections
                 return false;
             }
         }
-
+        
         public static bool TestConnectivity()
         {
             // try download the main page
@@ -109,20 +109,6 @@ namespace GameLauncher.Connections
                 callback(this.TestCredentials());
             }).Start();
         }
-    }
-
-    public enum ImageSize
-    {
-        CoverSmall,
-        ScreenshotMed,
-        CoverBig,
-        LogoMed,
-        ScreenshotBig,
-        ScreenshotHuge,
-        Thumb,
-        Micro,
-        z720p,
-        z1080p
     }
 
 
