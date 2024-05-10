@@ -86,7 +86,7 @@ namespace GameLauncher.Connections
             {
                 var request = (HttpWebRequest)WebRequest.Create("https://www.google.com/");
                 request.KeepAlive = false;
-                request.Timeout = 3000;
+                request.Timeout = 5000;
                 using HttpWebResponse _ = (HttpWebResponse)request.GetResponse();
                 return true;
             }

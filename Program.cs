@@ -1,4 +1,5 @@
 using GameLauncher.Connections;
+using GameLauncher.UI.Forms;
 
 namespace GameLauncher
 {
@@ -28,6 +29,13 @@ namespace GameLauncher
 
             ApplicationConfiguration.Initialize();
 
+            //SplashForm splashForm = new();
+            //new Thread(() => 
+            //{
+            //    Application.Run(splashForm);
+            //    Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
+            //}).Start();
+
             Management.Online = IGDBObj.TestConnectivity();
             Management.Config = Config.Load();
             
@@ -42,6 +50,8 @@ namespace GameLauncher
                 Management.IGDBObj = new(Management.Config.IGDBId!, Management.Config.IGDBSecret!);
                 Management.RichPresence = new("1237693349612224562");
             }
+
+            //splashForm.Invoke(splashForm.Close);
             
             Application.Run(new Form1());
         }
