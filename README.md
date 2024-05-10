@@ -24,6 +24,13 @@
 
 ## Versions
 
+### Beta 1.3.0
+
+- [ ] Added auto-updating
+- [ ] Added custom metadata override
+- [ ] Fixed dark theme
+- [ ] Added game name cleanup
+
 ### Beta 1.2.8
 
 - Added uninstall and forget buttons

@@ -53,7 +53,7 @@ namespace GameLauncher
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Text = $"Game Launcher [BETA {Management.Version}]";
+            this.Text = $"Game Launcher [BETA {Management.VersionString}]";
             
             if (!Management.Online)
                 this.Text += " [OFFLINE MODE]";

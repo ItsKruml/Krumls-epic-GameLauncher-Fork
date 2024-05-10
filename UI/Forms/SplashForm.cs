@@ -19,7 +19,7 @@ namespace GameLauncher.UI.Forms
 
         private void SplashForm_Load(object sender, EventArgs e)
         {
-            this.VersionLabel.Text = Management.Version;
+            this.VersionLabel.Text = Management.VersionString;
         }
     }
 }
