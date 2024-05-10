@@ -23,6 +23,7 @@
 
 ## Recently added
 
+- Fixed workingdir issue causing some games to start
 - Added offline mode
 - Added folder select when scan dir is inaccessible
 - Scan dir now configurable

@@ -117,7 +117,10 @@ namespace GameLauncher
             if (results.Length != 1)
                 throw new RestorableError("No, or multiple results found");
 
-            this.AttachedProcess = Process.Start(results.First());
+            ProcessStartInfo psi = new(results.First());
+            psi.WorkingDirectory = Path.GetDirectoryName(results.First())!;
+            
+            this.AttachedProcess = Process.Start(psi);
             return this.AttachedProcess;
         }
 

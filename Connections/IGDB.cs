@@ -114,7 +114,6 @@ namespace GameLauncher.Connections
 
     public static class ImageSizeMethods
     {
-
         public static string GetString(this ImageSize size)
         {
             return size switch
