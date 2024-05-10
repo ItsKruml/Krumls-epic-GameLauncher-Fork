@@ -17,6 +17,7 @@
 - [ ] Possibly add game source providing
 - [ ] Fix dir names feature
 - [ ] Note unrecognized games
+- [ ] Add splash screen
 
 
 
