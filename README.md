@@ -11,16 +11,11 @@
 ## To-do
 - [ ] Improve game automatic detection for launch.dat
 - [ ] Play time counter
-- [ ] Make uninstall work
 - [ ] Save file management and quick swapping
-- [ ] Add auto-updating
 - [ ] Possibly add game source providing
-- [ ] Fix dir names feature
 - [ ] Note unrecognized games
 - [ ] Add splash screen
-- [ ] Custom metadata override
-
-
+- [ ] Fix dark mode
 
 ## Versions
 
@@ -28,8 +23,7 @@
 
 - [ ] Added auto-updating
 - [ ] Added custom metadata override
-- [ ] Fixed dark theme
-- [ ] Added game name cleanup
+- [ ] Added game name matching
 
 ### Beta 1.4.8
 

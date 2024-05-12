@@ -13,7 +13,7 @@ namespace GameLauncher
 {
     public partial class SettingsPage : UserControl
     {
-        public Form1? MainForm;
+        public MainForm? MainForm;
         public SettingsPage()
         {
             this.InitializeComponent();
@@ -21,7 +21,7 @@ namespace GameLauncher
 
         private void SettingsPage_Load(object sender, EventArgs e)
         {
-            this.MainForm = (this.ParentForm as Form1)!;
+            this.MainForm = (this.ParentForm as MainForm)!;
 
             Dictionary<string, object> settings = new();
             settings.Add("Add custom game", new Action(this.MainForm.AddGameManually));

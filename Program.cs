@@ -53,7 +53,7 @@ namespace GameLauncher
 
             //splashForm.Invoke(splashForm.Close);
             
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
         
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)

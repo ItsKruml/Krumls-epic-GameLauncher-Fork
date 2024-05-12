@@ -39,6 +39,7 @@ namespace GameLauncher
         private string launchPath;
 
         public string? CoverPath => this.coverPath;
+        public string GameMetadataPath => this.gameMetadataPath;
         public bool HasCover => this.CoverPath != null && File.Exists(this.CoverPath);
 
         public LocalGame(string filePath)
@@ -151,18 +152,9 @@ namespace GameLauncher
                 if (game == null)
                 {
                     MessageBox.Show("Game not found on IGDB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    IGDBSearchResultsForm form = new(Path.GetFileName(this.GamePath));
-                    DialogResult result = form.ShowDialog();
-
-                    if (result == DialogResult.OK && form.SelectedGame != null)
-                    {
-                        string newPath = $"{this.GamePath.TrimEnd('\\', '/')} [{form.SelectedGame.Id}]";
-                        Directory.Move(this.GamePath, newPath);
-                        this.GamePath = newPath;
-                        
+                    if (MetadataOverrideForm.OverrideMetadata(this))
                         game = Management.IGDBObj.Search(Path.GetFileName(this.GamePath))
                             .FirstOrDefault();
-                    }
                     else
                         return;
                 }

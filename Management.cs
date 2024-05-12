@@ -23,7 +23,7 @@ namespace GameLauncher
         
         public static readonly Version Version = Assembly.GetEntryAssembly()!.GetName().Version!;
         public static readonly string VersionString = Version.ToString(3);
-        public static readonly string ExecutablePath = Assembly.GetEntryAssembly()!.Location;
+        public static readonly string ExecutablePath = Environment.ProcessPath!;
         public static Config Config;
         public static bool IGDBViable => !string.IsNullOrEmpty(Config.IGDBId) && !string.IsNullOrEmpty(Config.IGDBSecret);
         public static event Action<LauncherTheme> ThemeChange;

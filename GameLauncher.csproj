@@ -27,7 +27,7 @@
     <Compile Update="UI\Forms\IGDBDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UI\Forms\Form1.cs">
+    <Compile Update="UI\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

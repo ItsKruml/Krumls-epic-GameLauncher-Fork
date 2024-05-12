@@ -1,6 +1,6 @@
 ﻿namespace GameLauncher
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             flowLayoutPanel1 = new FlowLayoutPanel();
             contextMenuStrip1 = new ContextMenuStrip(this.components);
             addManuallyToolStripMenuItem = new ToolStripMenuItem();
@@ -109,7 +109,7 @@
             this.Controls.Add(flowLayoutPanel1);
             this.Controls.Add(LoadingProgressBar);
             this.Icon = (Icon)resources.GetObject("$this.Icon");
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Game Launcher";
             this.FormClosed += this.Form1_FormClosed;
             this.Load += this.Form1_Load;

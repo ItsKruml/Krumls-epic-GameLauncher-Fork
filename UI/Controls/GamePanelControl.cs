@@ -18,9 +18,9 @@ namespace GameLauncher
     public partial class GamePanelControl : UserControl, ITick
     {
         public LocalGame Game;
-        private Form1 originForm;
+        private MainForm originForm;
         private bool stillLoading = true;
-        public GamePanelControl(Form1 originForm, LocalGame game)
+        public GamePanelControl(MainForm originForm, LocalGame game)
         {
             this.originForm = originForm;
             this.Game = game;

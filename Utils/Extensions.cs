@@ -105,5 +105,10 @@ namespace GameLauncher.Utils
                 }
             };;
         }
+        
+        public static string CleanFileName(this string fileName)
+        {
+            return Path.GetInvalidFileNameChars().Aggregate(fileName, (current, c) => current.Replace(c.ToString(), string.Empty));
+        }
     }
 }

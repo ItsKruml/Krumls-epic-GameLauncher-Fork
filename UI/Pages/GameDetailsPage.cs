@@ -16,7 +16,7 @@ namespace GameLauncher
 {
     public partial class GameDetailsControl : UserControl, ITick
     {
-        public Form1? MainForm;
+        public MainForm? MainForm;
         private LocalGame game;
         public GameDetailsControl(LocalGame game)
         {
@@ -34,7 +34,7 @@ namespace GameLauncher
 
         private void GameDetailsControl_Load(object sender, EventArgs e)
         {
-            this.MainForm = (this.ParentForm as Form1)!;
+            this.MainForm = (this.ParentForm as MainForm)!;
 
             this.UpdateUIFromMetadata();
 
@@ -126,20 +126,8 @@ namespace GameLauncher
 
         private void overrideMetadataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IGDBSearchResultsForm form = new(Path.GetFileName(this.game.GamePath));
-            DialogResult result = form.ShowDialog();
-
-            if (result == DialogResult.OK && form.SelectedGame != null)
+            if (MetadataOverrideForm.OverrideMetadata(this.game))
             {
-                string dir = Path.GetDirectoryName(this.game.GamePath);
-                string name = Path.GetFileName(this.game.GamePath);
-                name = Regex.Replace(name, @"\[(\d+)\]", "");
-                name = $"{name.TrimEnd()} [{form.SelectedGame.Id}]";
-
-                string newPath = Path.Join(dir, name);
-                Directory.Move(this.game.GamePath, newPath);
-                this.game.GamePath = newPath;
-
                 this.RefreshMetadata();
                 this.UpdateUIFromMetadata();
             }

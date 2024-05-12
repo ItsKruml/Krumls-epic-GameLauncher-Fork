@@ -8,14 +8,14 @@ using IGDB.Models;
 
 namespace GameLauncher
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private static LocalGame[]? Games;
 
         private static Thread? ProcessMonitorThread;
         private static Thread? RichPresenceThread;
 
-        public Form1()
+        public MainForm()
         {
             this.InitializeComponent();
         }
@@ -183,9 +183,19 @@ namespace GameLauncher
             Version newVer = GitHub.GetLatestVersion();
             if (newVer > Management.Version)
             {
-                DialogResult result = MessageBox.Show($"New version available: {newVer}", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (result == DialogResult.Yes)
-                    GitHub.UpdateToVersion(newVer);
+                DialogResult result = MessageBox.Show($"New version is available: {newVer}\nWould you like to update?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                try
+                {
+                    if (result == DialogResult.Yes)
+                        GitHub.UpdateToVersion(newVer);
+                }
+                catch (Exception ex)
+                {
+                    string backupFile = Path.Combine(Path.GetDirectoryName(Management.ExecutablePath), "GameLauncher.exe.bak");
+                    if (File.Exists(backupFile))
+                        File.Move(backupFile, Management.ExecutablePath);
+                    MessageBox.Show($"Failed to update: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 callback();
             }
             else
