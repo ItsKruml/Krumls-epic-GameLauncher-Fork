@@ -31,6 +31,8 @@ public class GitHub
         
         File.Move(path, Management.ExecutablePath);
         
+        MessageBox.Show("Game Launcher has been updated. Please restart.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        
         Environment.Exit(0);
     }
 }

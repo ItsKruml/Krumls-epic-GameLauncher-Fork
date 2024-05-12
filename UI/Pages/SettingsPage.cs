@@ -26,7 +26,11 @@ namespace GameLauncher
             Dictionary<string, object> settings = new();
             settings.Add("Add custom game", new Action(this.MainForm.AddGameManually));
             settings.Add("Purge all metadata", new Action(this.MainForm.PurgeAllMetadata));
-            settings.Add("Check for updates", new Action(this.MainForm.CheckForUpdates));
+            settings.Add("Check for updates", new Action<Button>(b =>
+            {
+                b.Enabled = false;
+                this.MainForm.CheckForUpdates(() => b.Enabled = true);
+            }));
 
             settings.Add("IGDB ID", Management.Config.IGDBId ?? "");
             settings.Add("IGDB Secret", Management.Config.IGDBSecret ?? "");

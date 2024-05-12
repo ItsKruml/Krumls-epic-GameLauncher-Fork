@@ -33,6 +33,18 @@
 
             return control;
         }
+        
+        public static SettingItemControl ForAction(string key, Action<Button> onClick)
+        {
+            SettingItemControl control = new(key);
+            control.Button.Click += (s, e) => onClick((Button)s);
+            control.Button.Visible = true;
+
+            control.MainLabel.Visible = false;
+            control.Button.Text = key;
+
+            return control;
+        }
 
         public static SettingItemControl ForText(string key, Action<string> onType, string value = "")
         {
@@ -83,6 +95,7 @@
                 }, Enum.GetNames(value.GetType()), value.ToString()),
                 bool b => ForCondition(key, v => objectUpdate(v), b),
                 Action a => ForAction(key, () => { a(); objectUpdate(a); }),
+                Action<Button> ab => ForAction(key, b => { ab(b); objectUpdate(ab); }),
                 _ => throw new NotImplementedException(),
             };
         }

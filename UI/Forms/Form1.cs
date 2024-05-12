@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using GameLauncher.Connections;
 using GameLauncher.Utils;
 using IGDB.Models;
 
@@ -177,9 +178,21 @@ namespace GameLauncher
             new SettingsPage().Spawn(this);
         }
 
-        public void CheckForUpdates()
+        public void CheckForUpdates(Action callback)
         {
-            throw new NotImplementedException();
+            Version newVer = GitHub.GetLatestVersion();
+            if (newVer > Management.Version)
+            {
+                DialogResult result = MessageBox.Show($"New version available: {newVer}", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                    GitHub.UpdateToVersion(newVer);
+                callback();
+            }
+            else
+            {
+                MessageBox.Show("No updates available", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                callback();
+            }
         }
 
         public GamePanelControl GetPanel(LocalGame game) 
