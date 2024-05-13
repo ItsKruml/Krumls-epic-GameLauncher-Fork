@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GameLauncher.Utils;
 using Newtonsoft.Json;
 
 namespace GameLauncher
@@ -49,6 +50,8 @@ namespace GameLauncher
                 });
                 this.flowLayoutPanel1.Controls.Add(control);
             }
+            
+            Management.Config.Theme.Apply(this);
         }
 
         private void SettingChanged(string key, object value)

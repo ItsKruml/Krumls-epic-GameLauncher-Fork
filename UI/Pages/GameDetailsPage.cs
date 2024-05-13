@@ -40,6 +40,8 @@ namespace GameLauncher
 
             foreach (string profile in this.game.LaunchNames) this.playToolStripMenuItem.DropDownItems.Add(new ToolStripLabel(profile));
 
+            Management.Config.Theme.Apply(this);
+            
             foreach (ToolStripLabel item in this.playToolStripMenuItem.DropDownItems)
                 item.Click += this.Item_Click;
 

@@ -82,6 +82,7 @@
             this.FormBorderStyle = FormBorderStyle.None;
             this.Name = "SplashForm";
             this.ShowInTaskbar = false;
+            this.TopMost = true;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "SplashForm";
             this.Load += this.SplashForm_Load;

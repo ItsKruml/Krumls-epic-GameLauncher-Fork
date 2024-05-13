@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
@@ -71,12 +72,12 @@ namespace GameLauncher
             }
 
             Management.ThemeChange += this.Management_ThemeChange;
+            Management.Config.Theme.Apply(this);
         }
-
+        
         private void Management_ThemeChange(LauncherTheme theme)
         {
-            this.BackColor = theme.GetColor(LauncherThemeKey.PrimaryBackground);
-            this.ForeColor = theme.GetColor(LauncherThemeKey.PrimaryText);
+            theme.Apply(this);
         }
 
         private void LoadGames()
@@ -180,14 +181,21 @@ namespace GameLauncher
 
         public void CheckForUpdates(Action callback)
         {
-            Version newVer = GitHub.GetLatestVersion();
+            if (!Management.Online)
+            {
+                MessageBox.Show("Cannot check for updates in offline mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                callback();
+                return;
+            }
+            
+            Version newVer = Updater.GetLatestVersion();
             if (newVer > Management.Version)
             {
                 DialogResult result = MessageBox.Show($"New version is available: {newVer}\nWould you like to update?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 try
                 {
                     if (result == DialogResult.Yes)
-                        GitHub.UpdateToVersion(newVer);
+                        Updater.UpdateToVersion(newVer);
                 }
                 catch (Exception ex)
                 {

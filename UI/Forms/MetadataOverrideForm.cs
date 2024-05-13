@@ -41,6 +41,8 @@ namespace GameLauncher.UI.Forms
 
         private void IGDBSearchResultsForm_Load(object sender, EventArgs e)
         {
+            Management.Config.Theme.Apply(this);
+            
             this.SearchBox.Text = this._initialResult;
             this.PerformSearch();
         }

@@ -19,11 +19,17 @@
 
 ## Versions
 
+### Beta 1.5.1
+
+- Fixed auto-updating to use GitHub api
+- Improved dark mode
+- Added compatibility mode for updating
+
 ### Beta 1.5.0
 
-- [ ] Added auto-updating
-- [ ] Added custom metadata override
-- [ ] Added game name matching
+- Added auto-updating
+- Added custom metadata override
+- Added game name matching
 
 ### Beta 1.4.8
 

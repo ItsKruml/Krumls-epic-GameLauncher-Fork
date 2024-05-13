@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameLauncher.Connections;
+using GameLauncher.Utils;
 
 namespace GameLauncher
 {
@@ -30,6 +31,7 @@ namespace GameLauncher
 
         private void IGDBDetailsForm_Load(object sender, EventArgs e)
         {
+            Management.Config.Theme.Apply(this);
             MessageBox.Show("The credentials stored are either invalid or not present, please enter your IGDB client details to continue", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 

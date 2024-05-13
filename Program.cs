@@ -29,15 +29,20 @@ namespace GameLauncher
 
             ApplicationConfiguration.Initialize();
 
-            //SplashForm splashForm = new();
-            //new Thread(() => 
-            //{
-            //    Application.Run(splashForm);
-            //    Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
-            //}).Start();
-
+            // SplashForm splashForm = new();
+            // new Thread(() => 
+            // {
+            //     Application.Run(splashForm);
+            //     //Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
+            // }){IsBackground = true}.Start();
+            
             Management.Online = IGDBObj.TestConnectivity();
             Management.Config = Config.Load();
+
+            if (Updater.DidUpdate(out Version? oldVersion))
+            {
+                // Compatibilty
+            }
             
             if (Management.Online)
             {
