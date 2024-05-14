@@ -1,5 +1,5 @@
 # Game Launcher
->  Mel's Game Launcher (Version 1.5.2 Beta)
+>  Mel's Game Launcher (Version 1.5.3 Beta)
 
 
 
@@ -83,7 +83,7 @@ Yes! You can edit the `launch.dat` file in the game's folder with another line w
 ### Beta 1.5.3
 
 - Patched override metadata search term not being prefilled even when game not found
-- 
+- Added new non-blocking notification banner
 
 ### Beta 1.5.2
 
