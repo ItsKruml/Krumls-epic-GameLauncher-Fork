@@ -14,6 +14,7 @@ namespace GameLauncher.Models
     {
         public static readonly Palette BackgroundPrimary = new(36, 39, 45);
         public static readonly Palette BackgroundLight = new(47, 51, 58);
+        public static readonly Palette BackgroundDark = new(23, 25, 28);
 
         public static readonly Palette ForegroundPrimary = new(73, 80, 92);
 

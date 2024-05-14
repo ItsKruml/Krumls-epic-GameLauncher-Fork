@@ -28,7 +28,7 @@ namespace GameLauncher
         public Process? AttachedProcess;
         public bool IsRunning => this.AttachedProcess != null && !this.AttachedProcess.HasExited;
 
-        public string? Name => this.GameMetaData?["name"];
+        public string? Name => this.GameMetaData?["name"] ?? Path.GetFileName(this.GamePath);
         public string? Genres => this.GameMetaData?["genres"];
         public string? Summary => this.GameMetaData?["summary"];
         public string? CoverUrl => this.GameMetaData?["cover_url"];

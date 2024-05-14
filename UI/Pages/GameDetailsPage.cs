@@ -48,7 +48,7 @@ namespace GameLauncher
 
         private void UpdateUIFromMetadata()
         {
-            this.TitleLabel.Text = this.game.Name ?? Path.GetFileName(game.GamePath);
+            this.TitleLabel.Text = this.game.Name;
             this.DescriptionLabel.Text = this.game.Summary ?? "No description available";
             if (this.game.HasCover)
                 this.ThumnailImageBox.ImageLocation = this.game.CoverPath;

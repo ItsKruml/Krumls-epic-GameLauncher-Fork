@@ -1,9 +1,9 @@
 # Game Launcher
- Mel's game launcher
+>  Mel's Game Launcher (Version 1.5.2 Beta)
 
 
 
-<img src="Assets/gamelauncher.png" style="zoom:50%;" />
+<img src="Assets/gamelauncher.png" width=150 style="float:left;" />
 
 ## Installation
 
@@ -22,6 +22,9 @@
 Silly little project I decided to make for fun.
 
 ### Notable Features
+
+- Organizes your game collection
+- Works offline
 
 - Automatic game metadata fetching, including game cover image and description
 - Discord RPC support, if turned on, will show the games you are playing through it on your profile
@@ -76,6 +79,11 @@ Yes! You can edit the `launch.dat` file in the game's folder with another line w
 
 
 ## Versions
+
+### Beta 1.5.3
+
+- Patched override metadata search term not being prefilled even when game not found
+- 
 
 ### Beta 1.5.2
 
