@@ -1,6 +1,6 @@
 ﻿namespace GameLauncher
 {
-    partial class GamePanelControl
+    partial class GameItemControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GamePanelControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameItemControl));
             CoverImageBox = new PictureBox();
             NameLabel = new Label();
             PlayButton = new Button();
@@ -114,7 +114,7 @@
             this.Controls.Add(NameLabel);
             this.Controls.Add(CoverImageBox);
             this.Margin = new Padding(6);
-            this.Name = "GamePanelControl";
+            this.Name = "GameItemControl";
             this.Size = new Size(368, 563);
             this.Load += this.GamePanelControl_Load;
             ((System.ComponentModel.ISupportInitialize)CoverImageBox).EndInit();

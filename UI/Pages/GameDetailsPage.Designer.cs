@@ -1,6 +1,6 @@
 ﻿namespace GameLauncher
 {
-    partial class GameDetailsControl
+    partial class GameDetailsPage
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameDetailsControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameDetailsPage));
             ThumnailImageBox = new PictureBox();
             TitleLabel = new Label();
             DescriptionLabel = new Label();
@@ -183,7 +183,7 @@
             this.Controls.Add(ThumnailImageBox);
             this.ForeColor = Color.WhiteSmoke;
             this.Margin = new Padding(6);
-            this.Name = "GameDetailsControl";
+            this.Name = "GameDetailsPage";
             this.Size = new Size(1300, 681);
             this.Load += this.GameDetailsControl_Load;
             ((System.ComponentModel.ISupportInitialize)ThumnailImageBox).EndInit();

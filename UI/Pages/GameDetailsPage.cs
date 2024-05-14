@@ -14,11 +14,11 @@ using GameLauncher.Utils;
 
 namespace GameLauncher
 {
-    public partial class GameDetailsControl : UserControl, ITick
+    public partial class GameDetailsPage : UserControl, ITick
     {
         public MainForm originForm;
         private LocalGame game;
-        public GameDetailsControl(LocalGame game)
+        public GameDetailsPage(LocalGame game)
         {
             this.game = game;
             this.InitializeComponent();
@@ -115,8 +115,8 @@ namespace GameLauncher
             if (MessageBox.Show("Are you sure you want to uninstall this game? (Its files will be PERMANENTLY deleted)", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            GamePanelControl panel = this.originForm.GetPanel(this.game);
-            panel.Parent!.Controls.Remove(panel);
+            GameItemControl item = this.originForm.GetPanel(this.game);
+            item.Parent!.Controls.Remove(item);
 
             this.game.Uninstall();
 
@@ -137,8 +137,8 @@ namespace GameLauncher
             if (MessageBox.Show("Are you sure you want to forget this game?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            GamePanelControl panel = this.originForm.GetPanel(this.game);
-            panel.Parent!.Controls.Remove(panel);
+            GameItemControl item = this.originForm.GetPanel(this.game);
+            item.Parent!.Controls.Remove(item);
 
             this.game.Forget();
 

@@ -18,7 +18,7 @@ namespace GameLauncher
         private static Thread? RichPresenceThread;
 
         public SettingsPage? SettingsPage;
-        public GameDetailsControl? DetailsPage;
+        public GameDetailsPage? DetailsPage;
         private NavPage SelectedPage = NavPage.Home;
 
         public MainForm()
@@ -89,7 +89,7 @@ namespace GameLauncher
 
             foreach (LocalGame game in Games)
             {
-                GamePanelControl gpc = new(this, game);
+                GameItemControl gpc = new(this, game);
                 this.flowLayoutPanel1.Controls.Add(gpc);
             }
         }
@@ -205,8 +205,8 @@ namespace GameLauncher
             }
         }
 
-        public GamePanelControl GetPanel(LocalGame game)
-            => this.flowLayoutPanel1.Controls.OfType<GamePanelControl>()
+        public GameItemControl GetPanel(LocalGame game)
+            => this.flowLayoutPanel1.Controls.OfType<GameItemControl>()
                 .First(x => x.Game == game);
 
         private void HomeNavLabel_Click(object sender, EventArgs e) => Nav_Click(NavPage.Home);

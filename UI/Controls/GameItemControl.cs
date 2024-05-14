@@ -15,12 +15,12 @@ using IGDB.Models;
 
 namespace GameLauncher
 {
-    public partial class GamePanelControl : UserControl, ITick
+    public partial class GameItemControl : UserControl, ITick
     {
         public LocalGame Game;
         private MainForm originForm;
         private bool stillLoading = true;
-        public GamePanelControl(MainForm originForm, LocalGame game)
+        public GameItemControl(MainForm originForm, LocalGame game)
         {
             this.originForm = originForm;
             this.Game = game;
@@ -90,7 +90,7 @@ namespace GameLauncher
         {
             if (this.stillLoading) return;
 
-            originForm.DetailsPage = new GameDetailsControl(this.Game);
+            originForm.DetailsPage = new GameDetailsPage(this.Game);
             originForm.Nav_Click(MainForm.NavPage.Details);
         }
 
