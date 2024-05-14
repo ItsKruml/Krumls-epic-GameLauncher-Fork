@@ -151,7 +151,7 @@ namespace GameLauncher
 
                 if (game == null)
                 {
-                    MessageBox.Show("Game not found on IGDB", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Program.GlobalNotify("Game not found on IGDB", UI.Controls.NotifyControl.ImageType.Unknown);
                     if (MetadataOverrideForm.OverrideMetadata(this))
                         game = Management.IGDBObj.Search(Path.GetFileName(this.GamePath))
                             .FirstOrDefault();

@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Management;
 using System.Runtime.CompilerServices;
+using GameLauncher.UI.Controls;
 
 namespace GameLauncher.Utils
 {
@@ -90,6 +91,25 @@ namespace GameLauncher.Utils
         public static void Despawn(this Control control, Form parent)
         {
             parent.Controls.Remove(control);
+        }
+        
+        public static void Notify(this Form form, string message, NotifyControl.ImageType type)
+        {
+            NotifyControl control = new(message, type);
+
+            form.Invoke(() =>
+            {
+                control.Parent = form;
+                form.Controls.Add(control);
+                control.BringToFront();
+            });
+
+            new Thread(() =>
+            {
+                Thread.Sleep(3000);
+                if (Management.Running && !control.Closed)
+                    control.Invoke(control.Close);
+            }).Start();
         }
         
         public static string CleanFileName(this string fileName)

@@ -30,7 +30,7 @@ namespace GameLauncher
 
         private void IGDBDetailsForm_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("The credentials stored are either invalid or not present, please enter your IGDB client details to continue", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            this.Notify("The credentials stored are either invalid or not present, please enter your IGDB client details to continue", UI.Controls.NotifyControl.ImageType.Warning);
         }
 
         private void SetUpButton_Click(object sender, EventArgs e)
@@ -45,11 +45,11 @@ namespace GameLauncher
                 if (!valid)
                 {
                     this.Invoke(() => this.SetUpButton.Enabled = true);
-                    MessageBox.Show("Invalid client details provided, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Notify("Invalid client details provided, please try again", UI.Controls.NotifyControl.ImageType.Warning);
                     return;
                 }
 
-                MessageBox.Show("IGDB database now connected", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Program.GlobalNotify("IGDB database now connected", UI.Controls.NotifyControl.ImageType.Check);
 
                 Management.Config.IGDBId = clientId;
                 Management.Config.IGDBSecret = clientSecret;

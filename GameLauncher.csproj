@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Assets\gamelauncher.ico</ApplicationIcon>
     <PackageIcon>Assets\gamelauncher.png</PackageIcon>
-    <AssemblyVersion>1.5.2</AssemblyVersion>
+    <AssemblyVersion>1.5.3</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

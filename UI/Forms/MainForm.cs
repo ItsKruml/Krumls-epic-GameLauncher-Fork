@@ -63,7 +63,10 @@ namespace GameLauncher
             this.Text = $"Game Launcher [BETA {Management.VersionString}]";
 
             if (!Management.Online)
+            {
                 this.Text += " [OFFLINE MODE]";
+                this.Notify("You are in offline mode", UI.Controls.NotifyControl.ImageType.NoConnection);
+            }
 
             this.LoadGames();
 
@@ -153,6 +156,13 @@ namespace GameLauncher
 
         private void TickTimer_Tick(object sender, EventArgs e)
         {
+            if (Program.QueuedNotifications.Count > 0)
+            {
+                (string message, UI.Controls.NotifyControl.ImageType image) = 
+                    Program.QueuedNotifications.Dequeue();
+                this.Notify(message, image);
+            }
+
             foreach (ITick item in this.GetAllTickables(this))
                 item.Tick();
         }
@@ -175,7 +185,7 @@ namespace GameLauncher
         {
             if (!Management.Online)
             {
-                MessageBox.Show("Cannot check for updates in offline mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Notify("Cannot check for updates in offline mode", UI.Controls.NotifyControl.ImageType.NoConnection);
                 callback();
                 return;
             }
@@ -194,13 +204,13 @@ namespace GameLauncher
                     string backupFile = Path.Combine(Path.GetDirectoryName(Management.ExecutablePath), "GameLauncher.exe.bak");
                     if (File.Exists(backupFile))
                         File.Move(backupFile, Management.ExecutablePath);
-                    MessageBox.Show($"Failed to update: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Notify($"Failed to update: {ex.Message}", UI.Controls.NotifyControl.ImageType.Error);
                 }
                 callback();
             }
             else
             {
-                MessageBox.Show("No updates available", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Notify("No new updates available", UI.Controls.NotifyControl.ImageType.NewRelease);
                 callback();
             }
         }

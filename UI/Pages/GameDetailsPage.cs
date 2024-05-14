@@ -98,7 +98,7 @@ namespace GameLauncher
             {
                 this.Invoke(this.UpdateUIFromMetadata);
 
-                MessageBox.Show("Refreshed game metadata", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.originForm.Notify("Refreshed game metadata", UI.Controls.NotifyControl.ImageType.Check);
             });
         }
 

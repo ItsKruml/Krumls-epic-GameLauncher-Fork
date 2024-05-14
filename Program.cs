@@ -1,10 +1,17 @@
 using GameLauncher.Connections;
+using GameLauncher.UI.Controls;
 using GameLauncher.UI.Forms;
 
 namespace GameLauncher
 {
     internal static class Program
     {
+        public static Queue<(string message, NotifyControl.ImageType image)> QueuedNotifications = new();
+
+        public static void GlobalNotify(string message, NotifyControl.ImageType type)
+        {
+            QueuedNotifications.Enqueue((message, type));
+        }
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -27,7 +34,7 @@ namespace GameLauncher
                     UnhandledExceptionEventHandler(UnhandledException);
             }
 
-            ApplicationConfiguration.Initialize();
+            ApplicationConfiguration.Initialize(); 
 
             // SplashForm splashForm = new();
             // new Thread(() => 
