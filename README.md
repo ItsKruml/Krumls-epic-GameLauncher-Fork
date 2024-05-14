@@ -19,6 +19,12 @@
 
 ## Versions
 
+### Beta 1.5.2
+
+- Fixed updater compatibility always detecting update
+- Removed themes and made dark the new default
+- Major UI refresh
+
 ### Beta 1.5.1
 
 - Fixed auto-updating to use GitHub api
