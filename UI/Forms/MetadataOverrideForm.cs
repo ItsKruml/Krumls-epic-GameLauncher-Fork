@@ -41,8 +41,6 @@ namespace GameLauncher.UI.Forms
 
         private void IGDBSearchResultsForm_Load(object sender, EventArgs e)
         {
-            Management.Config.Theme.Apply(this);
-            
             this.SearchBox.Text = this._initialResult;
             this.PerformSearch();
         }
@@ -108,11 +106,11 @@ namespace GameLauncher.UI.Forms
             if (form.inCustomMode)
             {
                 // Download image as cover.
-                
+
                 WebClient client = new();
                 byte[] imageBytes = client.DownloadData(form.ThumnailPathLabel.Text);
                 File.WriteAllBytes(game.CoverPath, imageBytes);
-                
+
                 game.GameMetaData = new()
                 {
                     { "name", form.NameBox.Text },
@@ -120,9 +118,9 @@ namespace GameLauncher.UI.Forms
                     { "summary", form.DescriptionBox.Text },
                     { "cover_url", form.ThumnailPathLabel.Text }
                 };
-                
+
                 DatFile.Save(game.GameMetadataPath, game.GameMetaData);
-                
+
                 if (form.UpdateDirNameBox.Checked)
                 {
                     // change folder name to match the game name.
@@ -142,7 +140,7 @@ namespace GameLauncher.UI.Forms
                 string name = Path.GetFileName(game.GamePath);
                 if (form.UpdateDirNameBox.Checked)
                     name = selectedGame.Name;
-                
+
                 name = Regex.Replace(name, @"\[(\d+)\]", "");
                 name = $"{name.TrimEnd()} [{selectedGame.Id}]";
 
@@ -150,7 +148,7 @@ namespace GameLauncher.UI.Forms
                 Directory.Move(game.GamePath, newPath);
                 game.GamePath = newPath;
             }
-            
+
             return true;
         }
     }

@@ -26,12 +26,10 @@ namespace GameLauncher
             ProcessStartInfo si = new("https://api-docs.igdb.com/#getting-started:~:text=NOW%2C%20IT%27S%20FREE!-,Account%20Creation,usage%20under%20the%20terms%20of%20the%20Twitch%20Developer%20Service%20Agreement.,-Note%3A%20We");
             si.UseShellExecute = true;
             Process.Start(si);
-            this.linkLabel1.LinkVisited = true;
         }
 
         private void IGDBDetailsForm_Load(object sender, EventArgs e)
         {
-            Management.Config.Theme.Apply(this);
             MessageBox.Show("The credentials stored are either invalid or not present, please enter your IGDB client details to continue", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
@@ -39,9 +37,9 @@ namespace GameLauncher
         {
             string clientId = this.ClientIDTextbox.Text;
             string clientSecret = this.ClientSecretTextbox.Text;
-            
+
             this.SetUpButton.Enabled = false;
-            
+
             new IGDBObj(clientId, clientSecret).TestCredentialsAsync(valid =>
             {
                 if (!valid)
@@ -52,12 +50,12 @@ namespace GameLauncher
                 }
 
                 MessageBox.Show("IGDB database now connected", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 Management.Config.IGDBId = clientId;
                 Management.Config.IGDBSecret = clientSecret;
                 Management.Config.Save();
-                
-                this.Invoke(this.Close); 
+
+                this.Invoke(this.Close);
             });
         }
     }

@@ -42,6 +42,13 @@ namespace GameLauncher
             if (Updater.DidUpdate(out Version? oldVersion))
             {
                 // Compatibilty
+                
+                // Version 1.5.2 - remove themes from config
+                if (oldVersion < Version.Parse("1.5.2"))
+                {
+                    // Saving again will overwrite unknown keys
+                    Management.Config.Save();
+                }
             }
             
             if (Management.Online)

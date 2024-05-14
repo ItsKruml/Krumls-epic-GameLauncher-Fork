@@ -87,58 +87,9 @@ namespace GameLauncher.Utils
             control.BringToFront();
         }
 
-        public static Color GetColor(this LauncherTheme theme, LauncherThemeKey key)
+        public static void Despawn(this Control control, Form parent)
         {
-            return theme switch
-            {
-                LauncherTheme.Dark => key switch
-                {
-                    LauncherThemeKey.PrimaryText => Color.White,
-                    LauncherThemeKey.PrimaryBackground => Color.FromArgb(44,44,44),
-                    LauncherThemeKey.SecondaryBackground => Color.FromArgb(60, 60, 60),
-                },
-                LauncherTheme.Light => key switch
-                {
-                    LauncherThemeKey.PrimaryText => Color.Black,
-                    LauncherThemeKey.PrimaryBackground => Color.WhiteSmoke,
-                    LauncherThemeKey.SecondaryBackground => Color.White,
-                }
-            };;
-        }
-        
-        public static void Apply(this LauncherTheme theme, Control control)
-        {
-            control.BackColor = theme.GetColor(LauncherThemeKey.PrimaryBackground);
-            control.ForeColor = theme.GetColor(LauncherThemeKey.PrimaryText);
-
-            ApplyControlThemePatch(control, theme);
-        }
-        
-        private static void ApplyControlThemePatch(Control control, LauncherTheme theme)
-        {
-            // if we are a button, textbox, groupbox, we need to change the style
-            if (control is Button b)
-            {
-                b.FlatStyle = theme == LauncherTheme.Dark ? FlatStyle.Flat : FlatStyle.Standard;
-                b.BackColor = theme.GetColor(LauncherThemeKey.SecondaryBackground);
-                b.ForeColor = theme.GetColor(LauncherThemeKey.PrimaryText);
-                b.FlatAppearance.BorderColor = theme.GetColor(LauncherThemeKey.PrimaryText);
-            }
-            
-            if (control is TextBox)
-            {
-                control.BackColor = theme.GetColor(LauncherThemeKey.SecondaryBackground);
-                control.ForeColor = theme.GetColor(LauncherThemeKey.PrimaryText);
-            }
-            
-            if (control is GroupBox gb)
-            {
-                gb.ForeColor = theme.GetColor(LauncherThemeKey.PrimaryText);
-                gb.BackColor = theme.GetColor(LauncherThemeKey.PrimaryBackground);
-                gb.FlatStyle = theme == LauncherTheme.Dark ? FlatStyle.Flat : FlatStyle.Standard;
-            }
-            
-            foreach (Control child in control.Controls) ApplyControlThemePatch(child, theme);
+            parent.Controls.Remove(control);
         }
         
         public static string CleanFileName(this string fileName)

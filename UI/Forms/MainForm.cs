@@ -4,6 +4,7 @@ using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using GameLauncher.Connections;
+using GameLauncher.Models;
 using GameLauncher.Utils;
 using IGDB.Models;
 
@@ -15,6 +16,10 @@ namespace GameLauncher
 
         private static Thread? ProcessMonitorThread;
         private static Thread? RichPresenceThread;
+
+        public SettingsPage? SettingsPage;
+        public GameDetailsControl? DetailsPage;
+        private NavPage SelectedPage = NavPage.Home;
 
         public MainForm()
         {
@@ -56,10 +61,10 @@ namespace GameLauncher
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = $"Game Launcher [BETA {Management.VersionString}]";
-            
+
             if (!Management.Online)
                 this.Text += " [OFFLINE MODE]";
-            
+
             this.LoadGames();
 
             if (Management.Online)
@@ -70,14 +75,6 @@ namespace GameLauncher
                 RichPresenceThread = new(RichPresenceLoop);
                 RichPresenceThread.Start();
             }
-
-            Management.ThemeChange += this.Management_ThemeChange;
-            Management.Config.Theme.Apply(this);
-        }
-        
-        private void Management_ThemeChange(LauncherTheme theme)
-        {
-            theme.Apply(this);
         }
 
         private void LoadGames()
@@ -174,11 +171,6 @@ namespace GameLauncher
             Management.Running = false;
         }
 
-        private void SettingsButton_Click(object sender, EventArgs e)
-        {
-            new SettingsPage().Spawn(this);
-        }
-
         public void CheckForUpdates(Action callback)
         {
             if (!Management.Online)
@@ -187,7 +179,7 @@ namespace GameLauncher
                 callback();
                 return;
             }
-            
+
             Version newVer = Updater.GetLatestVersion();
             if (newVer > Management.Version)
             {
@@ -213,8 +205,60 @@ namespace GameLauncher
             }
         }
 
-        public GamePanelControl GetPanel(LocalGame game) 
+        public GamePanelControl GetPanel(LocalGame game)
             => this.flowLayoutPanel1.Controls.OfType<GamePanelControl>()
                 .First(x => x.Game == game);
+
+        private void HomeNavLabel_Click(object sender, EventArgs e) => Nav_Click(NavPage.Home);
+
+        private void DetailNavLabel_Click(object sender, EventArgs e) => Nav_Click(NavPage.Details);
+
+        private void SettingNavLabel_Click(object sender, EventArgs e) => Nav_Click(NavPage.Settings);
+
+        public void Nav_Click(NavPage page)
+        {
+            if (this.SelectedPage == page) return;
+
+            SettingsPage?.Despawn(this);
+            DetailsPage?.Despawn(this);
+            SettingsPage = null;
+
+            if (page == NavPage.Home)
+            {
+
+            }
+            else if (page == NavPage.Details)
+            {
+                if (DetailsPage == null)
+                {
+                    Nav_Click(NavPage.Home);
+                    return;
+                }
+
+                DetailsPage.Spawn(this);
+            }
+            else if (page == NavPage.Settings)
+            {
+                SettingsPage = new SettingsPage();
+                SettingsPage.Spawn(this);
+            }
+
+            this.SelectedPage = page;
+            RefreshVisuallySelectedPage();
+        }
+
+        private void RefreshVisuallySelectedPage()
+        {
+            this.HomeNavLabel.ForeColor = this.SelectedPage == NavPage.Home ? Palette.ActivePrimary : Palette.TextPrimary;
+            this.DetailNavLabel.ForeColor = this.SelectedPage == NavPage.Details ? Palette.ActivePrimary : Palette.TextPrimary;
+            this.SettingNavLabel.ForeColor = this.SelectedPage == NavPage.Settings ? Palette.ActivePrimary : Palette.TextPrimary;
+        }
+
+        public enum NavPage
+        {
+            Home,
+            Details,
+            Settings
+        }
     }
 }

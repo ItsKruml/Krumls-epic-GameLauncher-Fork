@@ -38,7 +38,6 @@ namespace GameLauncher
             settings.Add("IGDB Rate limit", Management.Config.IGDBRateLimit);
 
             settings.Add("Discord RPC", Management.Config.DiscordRPCEnabled);
-            settings.Add("Theme", Management.Config.Theme);
             settings.Add("Scan Dir", Management.Config.ScanDir);
 
             foreach (KeyValuePair<string, object> item in settings)
@@ -50,18 +49,10 @@ namespace GameLauncher
                 });
                 this.flowLayoutPanel1.Controls.Add(control);
             }
-            
-            Management.Config.Theme.Apply(this);
         }
 
         private void SettingChanged(string key, object value)
         {
-            if (key == "Theme")
-            {
-                Management.Config.Theme = (LauncherTheme)value;
-                Management.ThemeChanged();
-            }
-
             if (key == "Discord RPC")
             {
                 Management.Config.DiscordRPCEnabled = (bool)value;
@@ -70,16 +61,16 @@ namespace GameLauncher
                 else
                     Management.RichPresence.Stop();
             }
-            
+
             if (key == "IGDB ID")
                 Management.Config.IGDBId = (string)value;
-            
+
             if (key == "IGDB Secret")
                 Management.Config.IGDBSecret = (string)value;
-            
+
             if (key == "IGDB Rate limit")
                 Management.Config.IGDBRateLimit = (int)value;
-            
+
             if (key == "Scan Dir")
             {
                 if (Directory.Exists((string)value))
@@ -89,13 +80,8 @@ namespace GameLauncher
                         "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            
-            Management.Config.Save();
-        }
 
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            this.MainForm!.Controls.Remove(this);
+            Management.Config.Save();
         }
     }
 
@@ -103,21 +89,20 @@ namespace GameLauncher
     {
         public static readonly string AppDir = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "GameLauncher");
         public static readonly string SavePath = Path.Join(AppDir, "config.json");
-        
+
         public string? IGDBId;
         public string? IGDBSecret;
         public int IGDBRateLimit = 4;
 
-        public LauncherTheme Theme = LauncherTheme.Light;
         public bool DiscordRPCEnabled = true;
         public string ScanDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        
+
         public void Save()
         {
             Directory.CreateDirectory(AppDir);
             File.WriteAllText(SavePath, JsonConvert.SerializeObject(this));
         }
-        
+
         public static Config Load()
         {
             if (!File.Exists(SavePath)) new Config().Save();

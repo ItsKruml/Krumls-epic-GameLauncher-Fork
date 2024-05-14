@@ -54,7 +54,7 @@ namespace GameLauncher
         {
             if (this.Game.HasCover)
                 this.CoverImageBox.ImageLocation = this.Game.CoverPath;
-            else 
+            else
                 this.CoverImageBox.Image = ResourceStore.ErrorImage;
         }
 
@@ -90,7 +90,8 @@ namespace GameLauncher
         {
             if (this.stillLoading) return;
 
-            new GameDetailsControl(this.Game).Spawn(this.ParentForm!);
+            originForm.DetailsPage = new GameDetailsControl(this.Game);
+            originForm.Nav_Click(MainForm.NavPage.Details);
         }
 
         private void UpdateStartButton()

@@ -120,19 +120,17 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ExpandButton.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGPC/xhBQAAAdRJREFUeF7t
-        0QFHBEEYxvH7PJFEEkkiiSTSR48kkkgSSSSR6nlywxnv1c7d7u01+//x6O52dmZ63hEAAAAAAAAAAAAA
-        AAAAAAAAAP/XyvjvMlnGO3XC/+i5svrzbTn4Lr5T9UNI5X8pF8qa0jffwXfxnaoewmT5KZfKutIXn+07
-        TN6pyiFE5adcKRvKovlMnx3dqaoh/FZ+yrWyqSyKz/KZ0V1SqhhCk/JTbpQtpWs+w2dFd8gzuCHcKttK
-        V7y3z4jOzlNF+UnJEO6UHaVt3tN7R2fmqar8pGQI98qu0hbv5T2js/JUWX5SMoQHZU+Zl/fwXtEZeaou
-        PykZwqOyr8zK73qPaO88gyg/KRnCk3KglPI7fjfaM8+gyk9KhvCsHCpNea3fifbKM8jyk5IhvChHyl+8
-        xmujPfIMuvykZAivyrEyjZ95TfRuHsqfUDKEN+VEyfk3P4veyUP5gZIhvCunSuLP/i1am4fyf1EyhA/l
-        bBx/jtbkofwGSobwOU70LA/lFygZQpNQ/gzaGgLlz2HeIVB+C2YdAuW3qHQIlN+BpkOg/A79NQTKX4Bp
-        Q6D8BcqHQPk9SEOg/B65eMoHAAAAAAAAAAAAAAAAAAAAAAAAejIafQOUj9jOh/gLPwAAAABJRU5ErkJg
-        gg==
+        iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGPC/xhBQAAALBJREFUeF7t
+        0VkKwkAQRdFeuruNJrgGJWCDiJqpJ9LnQP0X9wUAAAAAAAAAAAAAAAAAAIAlw226XMf7o8Wbf3u9eW4t
+        jtBN/KilEbqLH7UwQrfxo5ojdB8/qjGC+B9KjiD+DyVGEH9BzhHEXynHCOJvlHIE8XdKMYL4Bx0ZQfxE
+        9owgfmJbRhA/kzUjiJ/ZvxHEL+TbCOIX9j6C+JXM4cUHAAAAAAAAAAAAAAAAoI4QntOeD5t6fioEAAAA
+        AElFTkSuQmCC
 </value>
   </data>
   <metadata name="MoreMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
+  </metadata>
+  <metadata name="paletteExtenderProvider1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>262, 17</value>
   </metadata>
 </root>

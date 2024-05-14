@@ -45,21 +45,28 @@
             DescriptionBox = new RichTextBox();
             NameBox = new TextBox();
             UpdateDirNameBox = new CheckBox();
+            this.paletteExtenderProvider1 = new Models.PaletteExtenderProvider();
             CustomOverridePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ResultBox
             // 
+            ResultBox.BackColor = Color.FromArgb(73, 80, 92);
+            ResultBox.BorderStyle = BorderStyle.FixedSingle;
+            ResultBox.ForeColor = Color.WhiteSmoke;
             ResultBox.FormattingEnabled = true;
             ResultBox.ItemHeight = 32;
             ResultBox.Location = new Point(22, 85);
             ResultBox.Margin = new Padding(6);
             ResultBox.Name = "ResultBox";
-            ResultBox.Size = new Size(615, 228);
+            ResultBox.Size = new Size(615, 226);
             ResultBox.TabIndex = 0;
             // 
             // SearchBox
             // 
+            SearchBox.BackColor = Color.FromArgb(73, 80, 92);
+            SearchBox.BorderStyle = BorderStyle.FixedSingle;
+            SearchBox.ForeColor = Color.WhiteSmoke;
             SearchBox.Location = new Point(154, 18);
             SearchBox.Margin = new Padding(6);
             SearchBox.Name = "SearchBox";
@@ -79,34 +86,43 @@
             // 
             // SelectButton
             // 
+            SelectButton.BackColor = Color.FromArgb(142, 122, 181);
+            SelectButton.FlatAppearance.BorderSize = 0;
+            SelectButton.FlatStyle = FlatStyle.Flat;
             SelectButton.Location = new Point(501, 331);
             SelectButton.Margin = new Padding(6);
             SelectButton.Name = "SelectButton";
             SelectButton.Size = new Size(139, 49);
             SelectButton.TabIndex = 3;
             SelectButton.Text = "Select";
-            SelectButton.UseVisualStyleBackColor = true;
+            SelectButton.UseVisualStyleBackColor = false;
             SelectButton.Click += this.SelectButton_Click;
             // 
             // SearchButton
             // 
+            SearchButton.BackColor = Color.FromArgb(142, 122, 181);
+            SearchButton.FlatAppearance.BorderSize = 0;
+            SearchButton.FlatStyle = FlatStyle.Flat;
             SearchButton.Location = new Point(501, 13);
             SearchButton.Margin = new Padding(6);
             SearchButton.Name = "SearchButton";
             SearchButton.Size = new Size(139, 49);
             SearchButton.TabIndex = 4;
             SearchButton.Text = "Search";
-            SearchButton.UseVisualStyleBackColor = true;
+            SearchButton.UseVisualStyleBackColor = false;
             SearchButton.Click += this.SearchButton_Click;
             // 
             // CustomMetadataButton
             // 
+            CustomMetadataButton.BackColor = Color.FromArgb(73, 80, 92);
+            CustomMetadataButton.FlatAppearance.BorderSize = 0;
+            CustomMetadataButton.FlatStyle = FlatStyle.Flat;
             CustomMetadataButton.Location = new Point(339, 332);
             CustomMetadataButton.Name = "CustomMetadataButton";
             CustomMetadataButton.Size = new Size(150, 46);
             CustomMetadataButton.TabIndex = 5;
             CustomMetadataButton.Text = "Custom";
-            CustomMetadataButton.UseVisualStyleBackColor = true;
+            CustomMetadataButton.UseVisualStyleBackColor = false;
             CustomMetadataButton.Click += this.CustomMetadataButton_Click;
             // 
             // CustomOverridePanel
@@ -122,21 +138,24 @@
             CustomOverridePanel.Controls.Add(NameBox);
             CustomOverridePanel.Location = new Point(22, 12);
             CustomOverridePanel.Name = "CustomOverridePanel";
-            CustomOverridePanel.Size = new Size(615, 301);
+            CustomOverridePanel.Size = new Size(619, 301);
             CustomOverridePanel.TabIndex = 6;
             CustomOverridePanel.Visible = false;
             // 
             // ThumnailPathLabel
             // 
             ThumnailPathLabel.Font = new Font("Segoe UI", 5F, FontStyle.Regular, GraphicsUnit.Point);
-            ThumnailPathLabel.Location = new Point(322, 252);
+            ThumnailPathLabel.Location = new Point(322, 250);
             ThumnailPathLabel.Name = "ThumnailPathLabel";
-            ThumnailPathLabel.Size = new Size(276, 32);
+            ThumnailPathLabel.Size = new Size(276, 35);
             ThumnailPathLabel.TabIndex = 8;
             ThumnailPathLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // GenresBox
             // 
+            GenresBox.BackColor = Color.FromArgb(73, 80, 92);
+            GenresBox.BorderStyle = BorderStyle.FixedSingle;
+            GenresBox.ForeColor = Color.WhiteSmoke;
             GenresBox.Location = new Point(166, 189);
             GenresBox.Name = "GenresBox";
             GenresBox.Size = new Size(432, 39);
@@ -180,16 +199,21 @@
             // 
             // ChooseThumbnailButton
             // 
+            ChooseThumbnailButton.BackColor = Color.FromArgb(73, 80, 92);
+            ChooseThumbnailButton.FlatAppearance.BorderSize = 0;
+            ChooseThumbnailButton.FlatStyle = FlatStyle.Flat;
             ChooseThumbnailButton.Location = new Point(166, 245);
             ChooseThumbnailButton.Name = "ChooseThumbnailButton";
             ChooseThumbnailButton.Size = new Size(150, 46);
             ChooseThumbnailButton.TabIndex = 2;
             ChooseThumbnailButton.Text = "Select";
-            ChooseThumbnailButton.UseVisualStyleBackColor = true;
+            ChooseThumbnailButton.UseVisualStyleBackColor = false;
             // 
             // DescriptionBox
             // 
+            DescriptionBox.BackColor = Color.FromArgb(73, 80, 92);
             DescriptionBox.BorderStyle = BorderStyle.FixedSingle;
+            DescriptionBox.ForeColor = Color.WhiteSmoke;
             DescriptionBox.Location = new Point(166, 73);
             DescriptionBox.Name = "DescriptionBox";
             DescriptionBox.Size = new Size(432, 104);
@@ -198,6 +222,9 @@
             // 
             // NameBox
             // 
+            NameBox.BackColor = Color.FromArgb(73, 80, 92);
+            NameBox.BorderStyle = BorderStyle.FixedSingle;
+            NameBox.ForeColor = Color.WhiteSmoke;
             NameBox.Location = new Point(166, 18);
             NameBox.Name = "NameBox";
             NameBox.Size = new Size(432, 39);
@@ -217,6 +244,7 @@
             // 
             this.AutoScaleDimensions = new SizeF(13F, 32F);
             this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.FromArgb(36, 39, 45);
             this.ClientSize = new Size(652, 395);
             this.Controls.Add(UpdateDirNameBox);
             this.Controls.Add(CustomOverridePanel);
@@ -226,6 +254,7 @@
             this.Controls.Add(label1);
             this.Controls.Add(SearchBox);
             this.Controls.Add(ResultBox);
+            this.ForeColor = Color.WhiteSmoke;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.Margin = new Padding(6);
             this.MaximizeBox = false;
@@ -258,5 +287,6 @@
         private Label label5;
         private Label ThumnailPathLabel;
         private CheckBox UpdateDirNameBox;
+        private Models.PaletteExtenderProvider paletteExtenderProvider1;
     }
 }

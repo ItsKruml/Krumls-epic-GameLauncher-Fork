@@ -16,7 +16,7 @@ namespace GameLauncher
 {
     public partial class GameDetailsControl : UserControl, ITick
     {
-        public MainForm? MainForm;
+        public MainForm originForm;
         private LocalGame game;
         public GameDetailsControl(LocalGame game)
         {
@@ -34,14 +34,12 @@ namespace GameLauncher
 
         private void GameDetailsControl_Load(object sender, EventArgs e)
         {
-            this.MainForm = (this.ParentForm as MainForm)!;
+            this.originForm = (this.ParentForm as MainForm)!;
 
             this.UpdateUIFromMetadata();
 
             foreach (string profile in this.game.LaunchNames) this.playToolStripMenuItem.DropDownItems.Add(new ToolStripLabel(profile));
 
-            Management.Config.Theme.Apply(this);
-            
             foreach (ToolStripLabel item in this.playToolStripMenuItem.DropDownItems)
                 item.Click += this.Item_Click;
 
@@ -57,7 +55,7 @@ namespace GameLauncher
             else
                 this.ThumnailImageBox.Image = ResourceStore.ErrorImage;
 
-            this.MainForm.GetPanel(this.game).UpdateUICover();
+            this.originForm.GetPanel(this.game).UpdateUICover();
         }
 
         private void Item_Click(object? sender, EventArgs e)
@@ -77,12 +75,11 @@ namespace GameLauncher
             this.UpdateStartButton();
         }
 
-        private void BackButton_Click(object sender, EventArgs e)
+        private void Close()
         {
-            Close();
+            this.originForm.Nav_Click(MainForm.NavPage.Home);
         }
 
-        private void Close() => this.Parent!.Controls.Remove(this);
         private void openInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", this.game.GamePath);
@@ -117,12 +114,12 @@ namespace GameLauncher
         {
             if (MessageBox.Show("Are you sure you want to uninstall this game? (Its files will be PERMANENTLY deleted)", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
-            
-            GamePanelControl panel = this.MainForm.GetPanel(this.game);
-            panel.Parent.Controls.Remove(panel);
-            
+
+            GamePanelControl panel = this.originForm.GetPanel(this.game);
+            panel.Parent!.Controls.Remove(panel);
+
             this.game.Uninstall();
-            
+
             this.Close();
         }
 
@@ -139,12 +136,12 @@ namespace GameLauncher
         {
             if (MessageBox.Show("Are you sure you want to forget this game?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
-            
-            GamePanelControl panel = this.MainForm.GetPanel(this.game);
-            panel.Parent.Controls.Remove(panel);
-            
+
+            GamePanelControl panel = this.originForm.GetPanel(this.game);
+            panel.Parent!.Controls.Remove(panel);
+
             this.game.Forget();
-            
+
             this.Close();
         }
     }

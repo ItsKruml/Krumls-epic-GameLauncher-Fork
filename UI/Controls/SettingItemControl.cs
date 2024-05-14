@@ -33,7 +33,7 @@
 
             return control;
         }
-        
+
         public static SettingItemControl ForAction(string key, Action<Button> onClick)
         {
             SettingItemControl control = new(key);

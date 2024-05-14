@@ -51,6 +51,7 @@ public class Updater
         }
         
         ver = Version.Parse(File.ReadAllText(path));
+        File.Delete(path);
         return true;
     }
     

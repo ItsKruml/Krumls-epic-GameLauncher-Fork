@@ -41,7 +41,7 @@
             CoverImageBox.Dock = DockStyle.Fill;
             CoverImageBox.Image = (Image)resources.GetObject("CoverImageBox.Image");
             CoverImageBox.Location = new Point(0, 0);
-            CoverImageBox.Margin = new Padding(6, 6, 6, 6);
+            CoverImageBox.Margin = new Padding(6);
             CoverImageBox.Name = "CoverImageBox";
             CoverImageBox.Size = new Size(368, 563);
             CoverImageBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -69,13 +69,17 @@
             // PlayButton
             // 
             PlayButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            PlayButton.BackColor = Color.FromArgb(142, 122, 181);
+            PlayButton.FlatAppearance.BorderSize = 0;
+            PlayButton.FlatStyle = FlatStyle.Flat;
+            PlayButton.ForeColor = Color.WhiteSmoke;
             PlayButton.Location = new Point(223, 508);
-            PlayButton.Margin = new Padding(6, 6, 6, 6);
+            PlayButton.Margin = new Padding(6);
             PlayButton.Name = "PlayButton";
             PlayButton.Size = new Size(139, 49);
             PlayButton.TabIndex = 2;
             PlayButton.Text = "Play";
-            PlayButton.UseVisualStyleBackColor = true;
+            PlayButton.UseVisualStyleBackColor = false;
             PlayButton.Visible = false;
             PlayButton.Click += this.PlayButton_Click;
             PlayButton.MouseEnter += this.All_MouseEnter;
@@ -84,13 +88,17 @@
             // MoreButton
             // 
             MoreButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            MoreButton.BackColor = Color.FromArgb(73, 80, 92);
+            MoreButton.FlatAppearance.BorderSize = 0;
+            MoreButton.FlatStyle = FlatStyle.Flat;
+            MoreButton.ForeColor = Color.WhiteSmoke;
             MoreButton.Location = new Point(154, 508);
-            MoreButton.Margin = new Padding(6, 6, 6, 6);
+            MoreButton.Margin = new Padding(6);
             MoreButton.Name = "MoreButton";
             MoreButton.Size = new Size(58, 49);
             MoreButton.TabIndex = 3;
             MoreButton.Text = "...";
-            MoreButton.UseVisualStyleBackColor = true;
+            MoreButton.UseVisualStyleBackColor = false;
             MoreButton.Visible = false;
             MoreButton.Click += this.MoreButton_Click;
             MoreButton.MouseEnter += this.All_MouseEnter;
@@ -105,7 +113,7 @@
             this.Controls.Add(PlayButton);
             this.Controls.Add(NameLabel);
             this.Controls.Add(CoverImageBox);
-            this.Margin = new Padding(6, 6, 6, 6);
+            this.Margin = new Padding(6);
             this.Name = "GamePanelControl";
             this.Size = new Size(368, 563);
             this.Load += this.GamePanelControl_Load;
