@@ -9,13 +9,13 @@
 
 
 ## To-do
-- [ ] Improve game automatic detection for launch.dat
+
+- [ ] Improve game automatic detection for launch file
 - [ ] Play time counter
 - [ ] Save file management and quick swapping
 - [ ] Possibly add game source providing
 - [ ] Note unrecognized games
 - [ ] Add splash screen
-- [ ] Fix dark mode
 
 ## Versions
 
