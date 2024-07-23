@@ -240,6 +240,9 @@ namespace GameLauncher
                 this.DeleteResources();
             
             File.Delete(this.launchPath);
+            // delete HTRG
+            foreach (string file in Directory.GetFiles(this.GamePath, "HOW TO RUN GAME!!.txt", SearchOption.AllDirectories))
+                File.Delete(file);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace GameLauncher;
 
 public class Config
 {
-    public static readonly string AppDir = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "GameLauncher");
+    public static readonly string AppDir = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "GameLauncher");
     public static readonly string SavePath = Path.Join(AppDir, "config.json");
 
     public string? IGDBId;

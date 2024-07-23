@@ -43,20 +43,36 @@ namespace GameLauncher
             //     //Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
             // }){IsBackground = true}.Start();
             
-            Management.Online = IGDBObj.TestConnectivity();
-            Management.Config = Config.Load();
-
             if (Updater.DidUpdate(out Version? oldVersion))
             {
                 // Compatibilty
+                
+                // Version 1.5.4 - change config location
+
+                if (oldVersion < Version.Parse("1.5.4"))
+                {
+                    string oldPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                        "GameLauncher");
+                    
+                    if (Directory.Exists(oldPath))
+                    {
+                        string newPath = Config.AppDir;
+                        Directory.Move(oldPath, newPath);
+                    }
+                }
                 
                 // Version 1.5.2 - remove themes from config
                 if (oldVersion < Version.Parse("1.5.2"))
                 {
                     // Saving again will overwrite unknown keys
+                    Management.Config = Config.Load();
                     Management.Config.Save();
                 }
             }
+
+            
+            Management.Online = IGDBObj.TestConnectivity();
+            Management.Config = Config.Load();
             
             if (Management.Online)
             {

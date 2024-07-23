@@ -1,5 +1,5 @@
 # Game Launcher
->  Mel's Game Launcher (Version 1.5.3 Beta)
+>  Mel's Game Launcher (Version 1.5.4 Beta)
 
 
 
@@ -7,13 +7,12 @@
 
 ## Installation
 
-1. Download the [latest release](https://github.com/Melodi17/GameLauncher/releases/latest) `GameLauncher.exe` file
-   or build it yourself.
-2. Place the executable somewhere convenient.
-3. Run it, if you haven't set up the IGDB credentials, a prompt will appear, these are used to grab game metadata, you can go [here](https://api-docs.igdb.com/#getting-started:~:text=NOW%2C%20IT%27S%20FREE!-,Account%20Creation,usage%20under%20the%20terms%20of%20the%20Twitch%20Developer%20Service%20Agreement.,-Note%3A%20We) to get instructions on how to do this.
-4. You're done! You may want to go to settings and change the scan dir to your games folder.
-5. You can add games with right click > add game manually, then select the game's executable, and then the folder it is located in, in the second dialog.
-6. Enjoy! Please report any issues in the issues tab and make suggestions there.
+1. Download the [latest release](https://github.com/Melodi17/GameLauncher/releases/latest) `GameLauncherSetup.exe` file
+   or build it yourself. (You can also download the `GameLauncher.exe` one for a portable installation)
+2. Run it, if you haven't set up the IGDB credentials, a prompt will appear, these are used to grab game metadata, you can go [here](https://api-docs.igdb.com/#getting-started:~:text=NOW%2C%20IT%27S%20FREE!-,Account%20Creation,usage%20under%20the%20terms%20of%20the%20Twitch%20Developer%20Service%20Agreement.,-Note%3A%20We) to get instructions on how to do this.
+3. You're done! You may want to go to settings and change the scan dir to your games folder.
+4. You can add games with right click > add game manually, then select the game's executable, and then the folder it is located in, in the second dialog.
+5. Enjoy! Please report any issues in the issues tab and make suggestions there.
 
 
 
@@ -75,10 +74,17 @@ Yes! You can edit the `launch.dat` file in the game's folder with another line w
 - [ ] Note unrecognized games
 - [ ] Add splash screen
 - [ ] Add start profile management inside app
+- [ ] Add minimize to try option
+- [ ] Fix issue with manual override not actually updating anything
 
 
 
 ## Versions
+
+### Beta 1.5.4
+
+- I know its been a while, but I'm back! Fixed issue with games restoring themselves after forgetting them
+- Switching to an installer for easier setup
 
 ### Beta 1.5.3
 
