@@ -1,5 +1,5 @@
 # Game Launcher
->  Mel's Game Launcher (Version 1.5.4 Beta)
+>  Mel's Game Launcher (Version 1.5.5 Beta)
 
 
 
@@ -81,6 +81,10 @@ Yes! You can edit the `launch.dat` file in the game's folder with another line w
 
 ## Versions
 
+### Beta 1.5.5
+-I forot my issue for months :)
+-I (kruml) learned pull requests
+-Fixed the ugly Logo
 ### Beta 1.5.4
 
 - I know its been a while, but I'm back! Fixed issue with games restoring themselves after forgetting them
