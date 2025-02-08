@@ -3,7 +3,7 @@
 
 
 
-<img src="Assets/gamelauncher.png" width=150 style="float:left;" />
+<img src="Assets/gamelauncherold.png" width=150 style="float:left;" />
 
 ## Installation
 
